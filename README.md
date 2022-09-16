@@ -1,9 +1,5 @@
 # TrichoCompare README
 
-**PLEASE NOTE THAT THIS README IS A DRAFT & IN-PROGRESS**
-
-**THIS PROJECT IS NOT YET COMPLETE & NEITHER IS THE README**
-
 Author: Vi Varga
 
 Posted: 16.09.2022
@@ -24,6 +20,7 @@ conda activate trich_thesis
 #the pandas python module was not automatically installed
 #it can easily be installed via anaconda
 conda install pandas
+
 ```
 
 ### Functional Annotation & Targeting Prediction
@@ -47,8 +44,45 @@ conda install -c conda-forge biopython
 
 #### InterProScan
 
-This program is installed on the SNIC Kebnekaise HPC. Running it requires batch scripts. 
-	- Reference page for program: https://interproscan-docs.readthedocs.io/en/latest/HowToRun.html
+To quote the official site: "InterPro provides functional analysis of proteins by classifying them into families and predicting domains and important sites." Source: https://www.ebi.ac.uk/interpro/
+
+This program is installed on the SNIC Kebnekaise HPC. Running it requires batch scripts, since Kebnekaise does not allow for front-end computation. 
+
+The program can be installed by following the directions provided here: https://interproscan-docs.readthedocs.io/en/latest/UserDocs.html
+
+```bash
+#copying the documentation from the site linked above: 
+
+mkdir my_interproscan
+cd my_interproscan
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.57-90.0/interproscan-5.57-90.0-64-bit.tar.gz
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.57-90.0/interproscan-5.57-90.0-64-bit.tar.gz.md5
+# Recommended checksum to confirm the download was successful:
+md5sum -c interproscan-5.57-90.0-64-bit.tar.gz.md5
+# Must return *interproscan-5.57-90.0-64-bit.tar.gz: OK*
+# If not - try downloading the file again as it may be a corrupted copy.
+
+#extract the tar ball
+tar -pxvzf interproscan-5.57-90.0-*-bit.tar.gz
+# where:
+#     p = preserve the file permissions
+#     x = extract files from an archive
+#     v = verbosely list the files processed
+#     z = filter the archive through gzip
+#     f = use archive file
+
+#index HMM models
+python3 initial_setup.py
+
+```
+
+InterProScan requires the following in order to run correctly: 
+ - Linux 64-bit system
+ - Perl 5
+ - Python 3
+ - Java 11
+
+Information on running the program can be found here: https://interproscan-docs.readthedocs.io/en/latest/HowToRun.html
 
 #### DeepLoc
 
@@ -90,13 +124,16 @@ conda install mkl-service
 #export PATH="$PATH:/home/inf-47-2020/bin/DeepLoc/deeploc-1.0/bin"
 #and then source it:
 source ~/.bashrc
+
 ```
 
 #### MitoFates
 
-Website: http://mitf.cbrc.jp/MitoFates/cgi-bin/top.cgi
+MitoFates is a protein targeting prediction software designed to predict mitochondrial targeting sequences and their cleavage sites. 
 
-Download: http://mitf.cbrc.jp/MitoFates/program.html
+The program website can be found here: http://mitf.cbrc.jp/MitoFates/cgi-bin/top.cgi
+
+The tar ball for the program can be found here: http://mitf.cbrc.jp/MitoFates/program.html
 
 ```bash
 #working from the bin/ 
@@ -127,6 +164,8 @@ source ~/.bashrc
 
 ```
 
+Please note that as of the writing of this section on 16.09.2022, the MitoFates website was not accessible. It is unclear whether this is a temporary error. 
+
 #### SignalP
 
 SignalP is a signal peptide detection software that predicts protein targeting for secretion. The program homepage is available here: http://www.cbs.dtu.dk/services/SignalP/
@@ -139,67 +178,35 @@ Installed on the server at: /usr/local/bin/signalp
 
 #### TargetP
 
+TargetP "predicts the present of N-terminal presenquences" for signal peptides, mitochondrial transit peptides, chloroplast transit peptides and thykaloid luminal transit peptides. The program homepage is available here: https://services.healthtech.dtu.dk/service.php?TargetP-2.0
 
+The executable file download link is available for academic use from here: https://services.healthtech.dtu.dk/service.php?TargetP-2.0
 
+A license is necessary in order to install the program, but it is free for academic use.
+
+Installed on the server at: /usr/local/bin/targetp
 
 #### YLoc
 
-Website: https://abi-services.informatik.uni-tuebingen.de/yloc/webloc.cgi?page=info
+YLoc predicts subcellular localization of proteins, and provides reasoning for its conclusions based on the biological properties of the protein sequence. 
 
-GitHub: https://github.com/KohlbacherLab/YLoc
+The program website with a web server is available here: https://abi-services.informatik.uni-tuebingen.de/yloc/webloc.cgi 
 
-Tutorial for the web version: https://abi-services.informatik.uni-tuebingen.de/yloc/webloc.cgi?page=help
-	- This is useful to keep track of because it has explanations for the models
-	- Quoting:
-  		- YLoc-LowRes	predicts into 4 locations (nucleus, cytoplasm, mitochodrion, secretory pathway for the animal and fungi version) or 5 locations (in addition chloroplast for the plant version), respectively.
-		- YLoc-HighRes	predicts into 9 or 10 locations, respectively. These are nucleus, cytoplasm, mitochodrion, plasma membrane, extracellular space, endoplasmic reticulum, peroxisome, and Golgi apparatus for all models. In addition, lysosome for the animal model, vacuole for the fungi model, and vacuole and chloroplast for the plant model.
-  		- YLoc+	predicts into 9 or 10 locations, as described above. In addition, it allows to predict multiple locations. It was trained, in addition to the 11 main eukaryotic location classes, on 7 multi-location classes.
-	- Of the above, chose to use YLoc+ since it's the most specific. The YLoc-HighRes can be done later if YLoc+ has outputs that are too complex.
+The GitHub page for the program can be found here: https://github.com/KohlbacherLab/YLoc
 
-To do all of the above, I do need to figure out how to access files on the host machine from within Docker, and how to copy files generated in Docker back onto the host machine (server).
-
-Accessing files stored on the host machine/server can be done with mounting:
-	- https://stackoverflow.com/questions/44876778/how-can-i-use-a-local-file-on-container
-		- According to the above:
-		- `docker run -v /Users/andy/mydata:/mnt/mydata myimage`
-		- Makes it so that "/mnt/mydata inside the container will have access to /Users/andy/mydata on my host"
-	- https://docs.docker.com/storage/bind-mounts/
-		- This, though, makes it seem like `--mount` is a better option than `-v` so let's go with that
-
-Copying files from the Docker image back to the host server is more straightforward:
-	- https://stackoverflow.com/questions/22049212/docker-copying-files-from-docker-container-to-host
-		- From top answer: `docker cp <containerId>:/file/path/within/container /host/path/target`
-
-Also, note that the same Docker can be opened on multiple terminals simultaneously:
-	- https://stackoverflow.com/questions/39794509/how-to-open-multiple-terminals-in-docker
-	- "You can run `docker exec -it <container> bash` from multiple terminals to launch several sessions connected to the same container."
-
-Notes for later use:
-	- adding a container name: https://www.tecmint.com/name-docker-containers/
-	- Basically `docker run --name <container_name> -ARGUMENTS image_id`)
-
-Notes for editing Dockerfile:
-	- https://docs.docker.com/engine/reference/builder/#user
-	- https://stackoverflow.com/questions/27701930/how-to-add-users-to-docker-container
-	- https://stackoverflow.com/questions/39855304/how-to-add-user-with-dockerfile
-	- f
-
-The yloc.py file can be accessed here: https://github.com/KohlbacherLab/YLoc/blob/master/YLoc/yloc.py
-
-Singularity references: 
-	- Docs: https://sylabs.io/guides/3.9/user-guide.pdf
-	- Opening Docker images with Singularity: https://sylabs.io/guides/2.6/user-guide/singularity_and_docker.html
-	- Instances (ie. running containers in the background): https://sylabs.io/guides/3.0/user-guide/running_services.html
-	- running Docker image not in the registry: https://github.com/apptainer/singularity/issues/1537
-	- Converting Dockerfile to Singularity recipe: https://stackoverflow.com/questions/60314664/how-to-build-singularity-container-from-dockerfile
-	- Spython: https://pypi.org/project/spython/
-	- Singularity official Spython docs: https://github.com/singularityhub/singularity-cli/blob/master/docs/pages/recipes.md
-	- `--fakeroot`: https://sylabs.io/guides/3.3/user-guide/fakeroot.html
-	- Building and running new container: https://singularity-tutorial.github.io/03-building/
-	- The docker image that theoretically converts docker images to Singularity: https://quay.io/repository/singularity/docker2singularity?tab=info
+YLoc is best run locally via the Docker image, available on the GitHub linked above. 
 
 ```bash
 #YLoc is best run using Docker
+#first, clone the YLoc directory locally
+git clone https://github.com/KohlbacherLab/YLoc
+#then build the docker image
+docker build /home/vi_varga/bin/YLoc
+#find the Docker Image ID with: 
+docker image ls
+#and run the container with, for example: 
+docker run -it f8ff9f3b1898 /bin/bash
+#in order to use files from the local computer, they have to be mounted when the Docker image is built: 
 docker run --mount type=bind,source=/home/inf-47-2020/ThesisTrich/DataFiles/InProgressEncoding,target=/YLoc/Vi_hostDataNEW,readonly --mount type=bind,source=/home/inf-47-2020/Trich_Parab/Data_Files/DataEncoding,target=/YLoc/Vi_hostDataOG,readonly -it f8ff9f3b1898 /bin/bash
 #above, the Docker command to create a Docker container 
 #opening the YLoc Docker image
@@ -218,9 +225,9 @@ One benefit of using the desktop version of Docker, rather than the command-line
 
 #### Broccoli
 
-GitHub source: https://github.com/rderelle/Broccoli
+Broccoli infers orthologous groups using a mixed phylogeny-network approach. The program can be downloaded from the GitHub page, here: https://github.com/rderelle/Broccoli
 
-Manual found here: https://github.com/rderelle/Broccoli/blob/master/manual_Broccoli_v1.2.pdf
+The manual can be found here: https://github.com/rderelle/Broccoli/blob/master/manual_Broccoli_v1.2.pdf
 
 Broccoli has 3 main dependencies:
   - ete3 library
@@ -250,36 +257,37 @@ conda install -c bioconda fasttree
 
 #### OrthoFinder
 
-OrthoFinder can be installed from the source on GitHub (https://github.com/davidemms/OrthoFinder), or via `conda`:
+OrthoFinder is an orthologous clustering software that uses score-based heuristic methods. The program can be installed from the source on GitHub (https://github.com/davidemms/OrthoFinder), or via `conda`:
 
 ```bash
 #in the trich_parab conda environment
 conda install orthofinder
 conda update orthofinder
+
 ```
 
 #### ProteinOrtho
 
-Website/GitLab: https://gitlab.com/paulklemm_PHD/proteinortho#readme
+ProteinOrtho is an orthology detection tool. The program code can be obatianed from the GitLab, here: https://gitlab.com/paulklemm_PHD/proteinortho#readme
 
-Manual: https://www.bioinf.uni-leipzig.de/Software/proteinortho/manual.html
+More information can be found on the website, here: https://www.bioinf.uni-leipzig.de/Software/proteinortho/
+
+The manual can be found here: https://www.bioinf.uni-leipzig.de/Software/proteinortho/manual.html
 
 ```bash
 #installation with conda
 conda create -n env-protOrtho
 conda activate env-protOrtho
 conda install proteinortho
+
 ```
 
 #### SonicParanoid
 
-Updated version of InParanoid. Link: http://iwasakilab.k.u-tokyo.ac.jp/sonicparanoid/
+SonicParanoid is an orthologous clustering program that follows in the path of the InParanoid program. The program website, including both installation instructions and the manual, can be found here: http://iwasakilab.k.u-tokyo.ac.jp/sonicparanoid/
 
 ```bash
-#in the main trich_thesis conda environment
-conda install -c bioconda sonicparanoid
-###
-#or not, there's more specific instructions than that
+#install in a conda environment
 conda create -n sonicparanoid python=3.8
 conda activate sonicparanoid
 conda install numpy filetype pandas scipy biopython mypy psutil scikit-learn
@@ -295,7 +303,7 @@ sonicparanoid-get-test-data -o .
 # sonicparanoid -i ./test_input -o ./test_output -m fast -t 4
 cd sonicparanoid_test
 sonicparanoid -i ./test_input -o ./test_output -p my_first_run -t 4
-#yup that all seems to have worked properly
+
 ```
 
 
@@ -326,67 +334,63 @@ java -jar Count.jar
 
 #### MAFFT
 
-Installation: 
- - Homepage: https://mafft.cbrc.jp/alignment/software/
- - On the command line for Linux, can be installed using `conda`
-   - https://anaconda.org/bioconda/mafft
-   - https://bioconda.github.io/recipes/mafft/README.html
- - Manual: https://mafft.cbrc.jp/alignment/software/manual/manual.html
- - Tips (not in manual): https://mafft.cbrc.jp/alignment/software/tips0.html
+MAFFT is a multiple sequence alignment program. The website can be found here: https://mafft.cbrc.jp/alignment/software/
+
+The manual can be found here: https://mafft.cbrc.jp/alignment/software/manual/manual.html
+
+Additional usage tips are available here: https://mafft.cbrc.jp/alignment/software/tips0.html
 
 ```bash
 #creating a new environment for the program
 conda create -n env-MAFFT
 conda activate env-MAFFT
 conda install -c bioconda mafft
-#just to be safe: 
+#and just to be safe: 
 conda update mafft
-#ok, good to go
+
 ```
 
 #### trimAl
 
-Alignment trimming tool: 
- - Article: https://academic.oup.com/bioinformatics/article/25/15/1972/213148
- - Homepage: http://trimal.cgenomics.org/
- - GitHub: https://github.com/inab/trimal
- - Command line usage manual: http://trimal.cgenomics.org/use_of_the_command_line_trimal_v1.2
- - Supplementary material: http://trimal.cgenomics.org/_media/manual.b.pdf
+TrimAl is an alignment trimming tool that automatically detects and removes "spurious sequences or poorly aligned regions" of MSAs. The program website can be found here: http://trimal.cgenomics.org/
+
+The GitHub can be found here: https://github.com/inab/trimal
+
+Instructions on command line usage can be found here: http://trimal.cgenomics.org/use_of_the_command_line_trimal_v1.2
+
+Supplementary material can be found here: http://trimal.cgenomics.org/_media/manual.b.pdf
 
 ```bash
 #installation - trying first with conda
 conda create -n env-trimAl
 conda activate env-trimAl
 conda install trimal
+
 ```
 
 #### IQ-TREE
 
- - Homepage: http://www.iqtree.org/
- - Manual: http://www.iqtree.org/doc/iqtree-doc.pdf
- - Creates Maximum Likelihood (ML) tree, but Courtney says this is what everyone she's seen use ALE uses for input, so it should be fine
- - has ultrafast bootstraps (unclear if needs `iqtree -s example.phy -m TIM2+I+G -B 1000` or just need to specify the `-B` argument)
- - The `-B` is the argument that's needed; in comparison, `-b` does non-parametric bootstraps
+IQ-TREE reconstructs evolutionary trees for aligned sequences. The program website can be found here: http://www.iqtree.org/
+
+The manual can be found here: http://www.iqtree.org/doc/iqtree-doc.pdf
 
 ```bash
 #installation can be done using conda
 conda create -n env-IQ-TREE
 conda activate env-IQ-TREE
 conda install -c bioconda iqtree
+
 ```
 
 #### ALE 
 
-Installation:
- - Article: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3797637/
- - GitHub page: https://github.com/ssolo/ALE
- - Docker registry: https://hub.docker.com/r/boussau/alesuite
- - Martijn et al. 2020 ALE workflow: https://github.com/maxemil/haloarchaea-evolution/blob/master/ALE_reconstruction.sh
+The Amalgamated Likelihood Estimation (ALE) method for the reconstruction of gene trees and estimation of Duplication-Transfer-Loss (DTL) events along a rooted species tree. The program can be installed from the GitHub page: https://github.com/ssolo/ALE
+
+The program is also available on the Docker registry, here: https://hub.docker.com/r/boussau/alesuite
 
 ```bash
 #on my local computer: 
 singularity pull ale.sif docker://boussau/alesuite:latest
-#well, it made a file, at least! now we have to see whether it works on Rackham, I guess
 #transferred over with FileZilla
 #using the Singularity image created locally & transferred to the HPC
 #need to make it executable
@@ -399,7 +403,9 @@ chmod +x ale.sif
 
 #### BUSCO
 
-Manual: https://busco.ezlab.org/busco_userguide.html
+BUSCO is a program used to evaluate the completeness of genomic datasets, based on the number of near-universal single-copy orthologs present. THe website can be found here: https://busco.ezlab.org/
+
+The manual can be found here: https://busco.ezlab.org/busco_userguide.html
 
 
 ```bash
@@ -411,38 +417,84 @@ conda activate env-BUSCO
 
 #### Seqkit
 
-Allows the manipulation and filtration of FASTA files
-
-Reference page: https://bioinf.shenwei.me/seqkit/
+Seqkit is a program that allows the manipulation and filtration of FASTA and FASTQ files. Information on the program can be found here: https://bioinf.shenwei.me/seqkit/
 
 ```bash
 #can be installed via conda
 conda install seqkit
+
 ```
 
 #### Transdecoder
 
 According to their own description on GitHub, "TransDecoder identifies candidate coding regions within transcript sequences" (source: https://github.com/TransDecoder/TransDecoder/wiki).
 
-GitHub: https://github.com/TransDecoder/TransDecoder
+The program's GitHub page can be found here: https://github.com/TransDecoder/TransDecoder
 
 ```bash
 #there is a conda package for the program
 #install within the trich_thesis conda environment
 conda install -c bioconda transdecoder
+
 ```
 
 #### Docker
 
+Docker is a program for the building and running of containers. Running Docker requires root priveleges, so it is generally not used on servers and HPCs. Docker has a desktop version, as well as command-line use. The Docker hub is a resource for publicly available Docker images. 
 
+The website can be found here: https://www.docker.com/
 
-
+An executable file to install the desktop app can be found here: https://www.docker.com/products/docker-desktop/
 
 #### Singularity
 
+Docker is another program for the building and running of containers. Unlike Docker, Singularity does not require root priveleges, so it is often used on servers and HPCs. Singularity can only be run from the command line, and it is generally capable of building and running Docker images. The documentation can be found here: https://docs.sylabs.io/guides/3.5/user-guide/introduction.html
 
+The program can be downloaded from here: https://sylabs.io/singularity/
 
+Installation instructions can be found here: https://docs.sylabs.io/guides/3.0/user-guide/installation.html
 
+```bash
+#installing dependencies
+sudo apt-get update && sudo apt-get install -y \
+    build-essential \
+    libssl-dev \
+    uuid-dev \
+    libgpgme11-dev \
+    squashfs-tools \
+    libseccomp-dev \
+    pkg-config
+sudo yum update -y && \
+    sudo yum groupinstall -y 'Development Tools' && \
+    sudo yum install -y \
+    openssl-devel \
+    libuuid-devel \
+    libseccomp-devel \
+    wget \
+    squashfs-tools
+export VERSION=1.11 OS=linux ARCH=amd64 && \
+    wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
+    sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
+    rm go$VERSION.$OS-$ARCH.tar.gz
+echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
+    echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
+    source ~/.bashrc
+
+#grab the source code 
+go get -d github.com/sylabs/singularity
+export VERSION=3.0.3 && # adjust this as necessary \
+    mkdir -p $GOPATH/src/github.com/sylabs && \
+    cd $GOPATH/src/github.com/sylabs && \
+    wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+    tar -xzf singularity-${VERSION}.tar.gz && \
+    cd ./singularity && \
+    ./mconfig
+./mconfig && \
+    make -C ./builddir && \
+    sudo make -C ./builddir install
+./mconfig --prefix=/opt/singularity
+
+```
 
 #### Python & Spyder
 
@@ -461,8 +513,8 @@ Both libraries can be installed with `conda`, like so:
 conda install -c anaconda pandas
 #install numpy
 conda install -c anaconda numpy
-```
 
+```
 
 #### R & RStudio
 
@@ -475,8 +527,8 @@ It can be installed as follows:
 ```R
 #package installation
 install.packages("upsetr")
-```
 
+```
 
 #### FigTree
 
@@ -498,17 +550,54 @@ source ~/.bashrc
 #copy the FigTree_v1.4.4/ directory to a desired Program storage directory
 #run the application by double-clicking the application icon
 #which is in the unzipped folder
-```
 
+```
 
 #### Inkscape
 
 Inkscape is a vector graphics editor that was used in order to edit SVG output files into the finalized figures that were used in the report. The GUI can be downloaded from here: https://inkscape.org/release/inkscape-1.1/
 
-
 #### draw.io/diagrams.net
 
 The draw.io software is a freely available software usable for creating simple diagrams. Both an online-only and desktop version of the tool are available from the website, here: https://drawio-app.com/
+
+
+## Version Summary
+
+LU Bioinformatics Server:
+  - conda 4.10.3
+  - Functional annotation: 
+    - DeepLoc 1.0
+    - EggNOG: emapper-2.0.2 & eggNOG DB version: 5.0.1 
+    - MitoFates 1.2
+    - SignalP 5.0b
+    - TargetP 2.0
+    - YLoc 1.0
+  - Orthologous clustering: 
+    - Broccoli 1.1
+    - OrthoFinder 2.5.4
+    - ProteinOrtho 6.0.33
+    - SonicParanoid 1.3.8
+  - Other: 
+    - BUSCO 5.3.0
+    - MAFFT 7.505
+    - IQ-TREE 2.2.0.3
+    - Seqkit 2.1.0
+    - Transdecoder 5.5.0
+    - TrimAl 1.4.1
+
+HPCs: 
+  - InterProScan 5.54-87.0
+  - ALE 0.4
+
+Local computer: 
+  - conda 4.13.0
+  - Python 3.8.12
+  - Spyder 5.1.5 & 5.2.2
+  - R 4.2.1
+  - RStudio RStudio 2022.07.1+554 
+  - UpSetR 1.4.0
+  - FigTree 1.4.4
 
 
 ## Data Collection
@@ -516,7 +605,7 @@ The draw.io software is a freely available software usable for creating simple d
 Data for this project obtained from the NCBI database, GiardiaDB, EukProt and in-house sources.
 
 Protein datasets were downloaded from the NCBI as follows:
-  - Accessed BioProject page for organismal genome
+  - Accessed BioProject page for organismal proteome
   - Accessed protein list
   - Downloaded proteins using "Send to:" option at top of page
     - Choose Destination: File
@@ -575,7 +664,9 @@ The protein prediction from the transcriptome for the Barthelona species was acc
 #need this program to translate the Barthelona transcriptome to proteome form
 #the instructions in the manual:
 TransDecoder.LongOrfs -t target_transcripts.fasta
+# extract the long open reading frames
 TransDecoder.Predict -t target_transcripts.fasta
+# predict the likely coding regions
 #now applying it:
 TransDecoder.LongOrfs -t Trinity_BarthelonaPAP020_Hiseq.fasta
 TransDecoder.Predict -t Trinity_BarthelonaPAP020_Hiseq.fasta
@@ -737,7 +828,7 @@ awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}'
 awk '{if (NR==1 && NF==0) next};1' RawData/Source_GiardiaDB/GiardiaDB_GintestinalisEP15_start.fasta \
   > DataReformatted/GiardiaDB_GintestinalisEP15.fasta
 ###
-#Genomes added later
+#Proteomes added later
 #Trepomonas
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' \
   < EP00703_Trepomonas_sp_PC1.fasta \
@@ -806,7 +897,7 @@ python assignFASTAheaders_v2.py DataReformatted/GiardiaDB_GintestinalisBGS.fasta
 python assignFASTAheaders_v2.py DataReformatted/GiardiaDB_GintestinalisBGS_B.fasta encoding_summary_ref.txt
 python assignFASTAheaders_v2.py DataReformatted/GiardiaDB_GintestinalisADH.fasta encoding_summary_ref.txt
 python assignFASTAheaders_v2.py DataReformatted/GiardiaDB_GintestinalisEP15.fasta encoding_summary_ref.txt
-#later genomes
+#later proteomes
 python assignFASTAheaders_v2.py DataReformatted/EP00703_Trepomonas_sp_PC1.fasta encoding_summary_ref.txt
 python assignFASTAheaders_v2.py DataReformatted/EP00792_Barthelona_sp_PAP020.fasta encoding_summary_ref.txt
 python assignFASTAheaders_v2.py DataReformatted/Anaeramoeba_lanta_160522.fasta encoding_summary_ref.txt
@@ -839,6 +930,26 @@ EggNOG was run on the Lund University Bioinformatics course server.
 conda activate eggNOG-NEW-env
 #directory for temporary files
 mkdir OG_comp_tmp
+#notes on the commands used: 
+# -m {diamond,mmseqs,hmmer,no_search,cache}
+# diamond: search seed orthologs using diamond (-i is required). mmseqs: search seed orthologs
+# using MMseqs2 (-i is required). hmmer: search seed orthologs using HMMER. (-i is required).
+# no_search: skip seed orthologs search (--annotate_hits_table is required, unless --no_annot).
+# cache: skip seed orthologs search and annotate based on cached results (-i and -c are
+# required). Default:diamond
+# -i FASTA_FILE         Input FASTA file containing query sequences (proteins by default; see --itype and
+# --translate). Required unless -m no_search.
+# --report_orthologs    Output the list of orthologs found for each query to a .orthologs file
+# --pfam_realign {none,realign,denovo}
+# Realign the queries to the PFAM domains. none = no realignment is performed. PFAM annotation
+# will be that transferred as specify in the --pfam_transfer option. realign = queries will be
+# realigned to the PFAM domains found according to the --pfam_transfer option. denovo = queries
+# will be realigned to the whole PFAM database, ignoring the --pfam_transfer option. Check hmmer
+# options (--num_servers, --num_workers, --port, --end_port) to change how the hmmpgmd server is run.
+# --output FILE_PREFIX, -o FILE_PREFIX
+# base name for output files
+# --temp_dir DIR        Where temporary files are created. Better if this is a local disk.
+# --cpu NUM_CPU         Number of CPUs to be used. --cpu 0 to run with all available CPUs. Default: 1
 #Anaeramoebidae
 ls /home/inf-47-2020/ThesisTrich/SortedEncodedData/Anaeramoebidae/*.fasta | while read file; do
   dir_file="${file##*/}"; #this line removes the path before the file name
@@ -960,6 +1071,27 @@ Larger FASTA files were split into multiple parts, since the InterProScan analys
 
 ```bash
 sbatch interproscan_Trichomonas_foetus.PRJNA345179_edit_StandardAA.Part05.sh
+###
+#notes on the commands used: 
+# -i,--input <INPUT-FILE-PATH>
+# Optional, path to fasta file that should be loaded on Master
+# startup. Alternatively, in CONVERT mode, the InterProScan 5 XML file to convert.
+# -d,--output-dir <OUTPUT-DIR>
+# Optional, output directory.  Note that this option, the --outfile (-o) option and the --output-file-base (-b) option
+# are mutually exclusive. The output filename(s) are the same as the input filename, with the appropriate file extension(s)
+# for the output format(s) appended automatically .
+# -T,--tempdir <TEMP-DIR>
+# Optional, specify temporary file directory (relative or absolute path). The default location is temp/.
+# -goterms,--goterms
+# Optional, switch on lookup of corresponding Gene Ontology annotation (IMPLIES -iprlookup option)
+# -iprlookup,--iprlookup
+# Also include lookup of corresponding InterPro annotation in the TSV and GFF3 output formats.
+# -pa,--pathways
+# Optional, switch on lookup of corresponding Pathway annotation (IMPLIES -iprlookup option)
+# -cpu,--cpu <CPU>
+# Optional, number of cores for inteproscan.
+# -appl,--applications <ANALYSES>
+# Optional, comma separated list of analyses.  If this option is not set, ALL analyses will be run.
 
 ```
 
@@ -972,6 +1104,11 @@ DeepLoc was run on the Lund University Bioinformatics course server.
 conda activate DeepLoc_usage
 #the program is run as follows: 
 deeploc --fasta ../../EncodedData/BM_newprots_may21.anaeromoeba_edit.fasta --output BM_anaeromoeba_DL --attention
+# -f FASTA, --fasta FASTA
+# Input proteins in fasta file.
+# -o OUTPUT, --output OUTPUT
+# Output prefix.
+# -a, --attention       Generate file with attention values for each protein.
 #when it finishes, get this printout to stdout:
 #WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 #Input file processed. Starting prediction...
@@ -999,7 +1136,7 @@ deeploc --fasta ../../DataFiles/EncodedData/Giardia_muris.PRJNA524057_edit.fasta
 deeploc --fasta ../../DataFiles/EncodedData/Histomonas_meleagridis.PRJNA594289_edit.fasta --output Histomonas_meleagridis.PRJNA594289_DL --attention
 deeploc --fasta ../../DataFiles/EncodedData/Kipferlia_bialata.PRJDB5223_edit.fasta --output Kipferlia_bialata.PRJDB5223_DL --attention
 deeploc --fasta ../../DataFiles/EncodedData/Spironucleus_salmonicida.PRJNA60811_edit.fasta --output Spironucleus_salmonicida.PRJNA60811_DL --attention
-#later genomes
+#later proteomes
 deeploc --fasta ../../DataFiles/EncodedData/EP00792_Barthelona_sp_PAP020_edit.fasta --output EP00792_Barthelona_sp_PAP020_DL --attention
 nohup deeploc --fasta ../../DataFiles/EncodedData/Anaeramoeba_lanta_160522_edit.fasta --output Anaeramoeba_lanta_160522_DL --attention &> nohup_Alanta.out &
 
@@ -1020,6 +1157,7 @@ The `replace_AA.py` script was written to replace specific amino acids, and is m
 conda activate MitoFates-env
 #model to use:
 perl MitoFates.pl example.fasta metazoa
+# Usage: [MitoFates.pl] [MultiFastaFile] [Organism Flag: fungi, metazoa or plant]
 #running the standardization python script above on the files
 ls ../EncodedData/*.fasta | while read file; do
   python ../remove_nonStandardAA.py $file;
@@ -1101,6 +1239,15 @@ SignalP was run on the Lund University Bioinformatics course server.
 ```bash
 #obtain the help menu with the following
 signalp -h
+#explanation of command use: 
+# -format string
+# Output format. 'long' for generating the predictions with plots, 'short' for the predictions without plots. (default "short")
+# -org string
+# Organism. Archaea: 'arch', Gram-positive: 'gram+', Gram-negative: 'gram-' or Eukarya: 'euk' (default "euk")
+# -plot string
+# Plots output format. When long output selected, choose between 'png', 'eps' or 'none' to get just a tabular file. (default "png")
+# -fasta string
+# Input file in fasta format.
 #running the program
 ls /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta | while read file; do
   dir_file="${file##*/}"; #this line removes the path before the file name
@@ -1110,7 +1257,7 @@ ls /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta | while read file
   signalp -format 'long' -org 'euk' -plot 'none' -fasta $file;
 done
 ###
-#genomes added later
+#proteomes added later
 signalp -format 'long' -org 'euk' -plot 'none' -fasta ../../DataFiles/EncodedData/EP00703_Trepomonas_sp_PC1_edit.fasta
 signalp -format 'long' -org 'euk' -plot 'none' -fasta ../../DataFiles/EncodedData/EP00792_Barthelona_sp_PAP020_edit.fasta
 nohup signalp -format 'long' -org 'euk' -plot 'none' -fasta ../../DataFiles/EncodedData/Anaeramoeba_lanta_160522_edit.fasta &> nohup_Alanta.out &
@@ -1124,6 +1271,17 @@ TargetP was run on the Lund University Bioinformatics course server.
 ```bash
 #obtain the help menu with the following
 targetp -h
+#explanation of command arguments: 
+# -format string
+# Output format. 'long' for generating the predictions with plots, 'short' for the predictions without plots. (default "short")
+# -org string
+# Organism. Non-plant: 'non-pl', Plant: 'pl'  (default "non-pl")
+# -plot string
+# Plots output format. When long output selected, choose between 'png', 'eps' or 'none' to get just a tabular file. (default "png")
+# -batch int
+# Number of sequences that the tool will run simultaneously. Decrease or increase size depending on your system memory. (default 100)
+# -fasta string
+# Input file in fasta format.
 #running the program
 ls /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta | while read file; do
   dir_file="${file##*/}"; #this line removes the path before the file name
@@ -1153,7 +1311,7 @@ tail -n +59681 Trichomonas_vaginalis_RefSeq.G3_edit.fasta > Trichomonas_vaginali
 targetp -format 'long' -org 'non-pl' -plot 'none' -batch 10000 -fasta ../Trichomonas_vaginalis_RefSeq.G3_edit.1st_half.fasta &
 targetp -format 'long' -org 'non-pl' -plot 'none' -batch 10000 -fasta ../Trichomonas_vaginalis_RefSeq.G3_edit.2nd_half.fasta &
 ###
-#new genomes
+#new proteomes
 targetp -format 'long' -org 'non-pl' -plot 'none' -batch 10000 -fasta ../../DataFiles/EncodedData/EP00703_Trepomonas_sp_PC1_edit.fasta
 targetp -format 'long' -org 'non-pl' -plot 'none' -batch 10000 -fasta ../../DataFiles/EncodedData/EP00792_Barthelona_sp_PAP020_edit.fasta
 nohup targetp -format 'long' -org 'non-pl' -plot 'none' -batch 10000 -fasta ../../DataFiles/EncodedData/Anaeramoeba_lanta_160522_edit.fasta &> nohup_Alanta.out &
@@ -1186,6 +1344,32 @@ docker cp 02215441176b:/YLoc /home/inf-47-2020/ThesisTrich/YLoc_Results
 docker cp b0d70f2c4e2e:/YLoc/Vi_results  /home/inf-47-2020/ThesisTrich/YLoc_Results
 docker cp b80bcb53e981:/YLoc/Vi_results /home/inf-47-2020/ThesisTrich/YLoc_Results
 #below, the commands for the preliminary project files
+#explanation of commands: 
+# Usage YLoc: python yloc.py <fasta_file> <model_name> <prediction_id(optional)> <print_result(y/n)(optional)>
+# Available models:
+# YLoc-LowRes* Animals
+# YLoc-LowRes Animals
+# YLoc-LowRes Fungi
+# YLoc-LowRes* Fungi
+# YLoc-LowRes Plants
+# YLoc-LowRes* Plants
+# YLoc-HighRes Animals
+# YLoc-HighRes Fungi
+# YLoc-HighRes Plants
+# YLoc-HighRes* Animals
+# YLoc-HighRes* Fungi
+# YLoc-HighRes* Plants
+# YLoc+ Animals
+# YLoc+ Fungi
+# YLoc+ Plants
+# YLoc+* Animals
+# YLoc+* Fungi
+# YLoc+* Plants
+# Explanations for the options: 
+# YLoc-LowRes	predicts into 4 locations (nucleus, cytoplasm, mitochodrion, secretory pathway for the animal and fungi version) or 5 locations (in addition chloroplast for the plant version), respectively.
+# YLoc-HighRes	predicts into 9 or 10 locations, respectively. These are nucleus, cytoplasm, mitochodrion, plasma membrane, extracellular space, endoplasmic reticulum, peroxisome, and Golgi apparatus for all models. In addition, lysosome for the animal model, vacuole for the fungi model, and vacuole and chloroplast for the plant model.
+# YLoc+	predicts into 9 or 10 locations, as described above. In addition, it allows to predict multiple locations. It was trained, in addition to the 11 main eukaryotic location classes, on 7 multi-location classes.
+# Used YLoc+ for best resolution; Used the YLoc+* version because the regular YLoc+ did not run
 python yloc.py /YLoc/Vi_hostDataOG/BM_newprots_may21.anaeromoeba_edit.fasta "YLoc+* Animals" BM_newprots_may21.anaeromoeba_edit_YL y > BM_newprots_may21.anaeromoeba_edit_YL.txt
 python yloc.py /YLoc/Vi_hostDataOG/BS_newprots_may21.anaeromoeba_edit.fasta "YLoc+* Animals" BS_newprots_may21.anaeromoeba_edit_YL y > BS_newprots_may21.anaeromoeba_edit_YL.txt
 python yloc.py /YLoc/Vi_hostDataOG/Dientamoeba_fragilis.43352.aa_edit.fasta "YLoc+* Animals" Dientamoeba_fragilis.43352.aa_edit_YL y > Dientamoeba_fragilis.43352.aa_edit_YL.txt
@@ -1243,6 +1427,22 @@ conda activate env-BUSCO
 proteinortho -h
 #see available datasets with: 
 busco --list-datasets
+#explanation of commands: 
+# -i SEQUENCE_FILE, --in SEQUENCE_FILE
+# Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set. Also possible to use a path to a directory containing multiple input files.
+# -o OUTPUT, --out OUTPUT
+# Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. The path to the output folder is set with --out_path.
+# -m MODE, --mode MODE  Specify which BUSCO analysis mode to run.
+# There are three valid modes:
+#  - geno or genome, for genome assemblies (DNA)
+#  - tran or transcriptome, for transcriptome assemblies (DNA)
+#  - prot or proteins, for annotated gene sets (protein)
+# -l LINEAGE, --lineage_dataset LINEAGE
+# Specify the name of the BUSCO lineage to be used.
+# -c N, --cpu N 
+# Specify the number (N=integer) of threads/cores to use.
+# -e N, --evalue N      
+# E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)
 #first, use the larger database
 nohup busco --in /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/ --out trichLantaEuk --mode proteins --lineage_dataset eukaryota_odb10 --cpu 20 --evalue 0.001 &> nohup_Lanta_euk.out &
 #then the smaller database
@@ -1264,6 +1464,10 @@ Broccoli was run on the Lund University Bioinformatics course server.
 conda activate env-broccoli
 #run the program
 nohup python /home/inf-47-2020/bin/Broccoli/broccoli.py -dir ../../DataFiles/EncodedData -phylogenies ml -threads 20 &> nohup_Alanta.out &
+# `-dir` name of the directory containing the proteome files [required]
+# `-phylogenies` phylogenetic method: 'nj' (neighbor joining), 'me' (minimum evolution)
+# or 'ml' (maximum likelihood) [default = 'nj']
+# `-threads` number of threads [default = 1]
 
 ```
 
@@ -1275,6 +1479,9 @@ OrthoFinder was run on the Lund University Bioinformatics course server.
 #activate the relevant conda environment where the program is installed
 #run the program
 orthofinder -f DataFiles/EncodedData/ -a 15 -o OrthoFinder_Results3/
+#`-f` gives the directory where the analyzed files are
+#`-a` determines number of threads (default 1)
+#`-o` non-default results directory (program makes it, can't be extant)
 
 ```
 
@@ -1289,6 +1496,13 @@ conda activate env-protOrtho
 proteinortho -h
 #running the program
 nohup proteinortho -project=trichAlanta -cpus=20 -p=diamond -e=0.001 /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta &> nohup_Alanta.out &
+# -project=prefix for all result file names [default: myproject]
+# -cpus=number of processors to use [default: auto]
+# -p=blast program [default: diamond] 
+# {autoblast|blastp|blastn|tblastx|blastp_legacy|blastn_legacy|tblastx_legacy|diamond|usearch|ublast|lastp|lastn|rapsearch|topaz|blatp|blatn|mmseqsp|mmseqsn}
+# The suffix 'p' or 'n' indicates aminoacid fasta files (p) or nucleotide fasta files (n).
+# The suffix '_legacy' indicates legacy blastall (otherwise blast+ is used).
+# -e=E-value for blast [default: 1e-05]
 #the Diamond files are created in the directory where the FASTA files are stored
 #so they need to be manually moved
 mkdir DiamondFiles/
@@ -1305,6 +1519,18 @@ SonicParanoid was run on the Lund University Bioinformatics course server.
 conda activate sonicparanoid
 #run the program
 sonicparanoid -i /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData -o ./A_lanta_Run -p Trich_Thesis3 -t 15 --aln-tool diamond -m most-sensitive -ca -op &> log_Alanta_detach.txt &
+# -p PROJECT_ID, --project-id PROJECT_ID
+# Name of the project reflecting the name of the run. If not specified it will be automatically generated using the current date and time.
+# -t THREADS, --threads THREADS
+# Maximum number of CPUs to be used. Default=4
+# --aln-tool {mmseqs, diamond, blast}
+# Local alignment tool to be used. Default=mmseqs.
+# -m {fast, default, sensitive, most-sensitive}, --mode {fast, default, sensitive, most-sensitive}
+# SonicParanoid execution mode. The default mode is suitable for most studies. Use sensitive or most-sensitive if the input proteomes are not closely related.
+# -ca, --complete-aln
+# Perform complete alignments (slower), rathen than essential ones. Default=False.
+# -op, --output-pairs
+# Output a text file with all the orthologous relations.
 
 ```
 
@@ -2593,7 +2819,7 @@ Overall, the scores of the control proteins were not what I hoped they would be:
 
 ## _A. lanta_ inclusion
 
-The _Anaeramoeba lanta_ genome was added to the analysis during very late stages of the project. I recieved the genome on 16.May.2022. 
+The _Anaeramoeba lanta_ proteome was added to the analysis during very late stages of the project. I recieved the proteome on 16.May.2022. 
 
 In the interest of time (while still desiring to include the proteome), only a very limited analysis was run on _A. lanta_ prior to its inclusion in the Count and ALE analyses. Namely, the proteome was used in re-clustering with OrthoFinder and SonicParanoid, and run through the EggNOG pipeline (with _de novo_ PFam searches). Afterwards, a small version of the Metamonad database was constructed for use in the gene flux and ancestral state reconstruction analyses. The other analysis programs were used, and the full database constructed with _A. lanta_'s inclusion, at a later date, and so all of that additional data was not utilized for filtration. 
 
@@ -3293,6 +3519,10 @@ The multiple sequence alignments will be created using the MAFFT software, using
 ```bash
 #activate the conda environement where the program is installed
 conda activate env-MAFFT
+#explanation of commands: 
+# "L-INS-i (probably most accurate; recommended for <200 sequences; iterative refinement method incorporating local pairwise alignment information)"
+# `mafft --localpair --maxiterate 1000 input [> output]`
+# OR: `linsi input [> output]`
 #in Mito_SP/
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Mito_SP/*.fasta | while read file; do
 	full_file="${file##*/}"; #this line removes the path before the file name
@@ -3430,6 +3660,13 @@ The TrimAl program is used to trim the alignments.
 ```bash
 #activate the relevant conda environement
 conda activate env-trimAl
+#explanation of commands: 
+#`-in`: input file name
+#`-fasta`: output file should be in FASTA format
+#unnecessary because default is to keep input file format in output
+#`-gappyout`: Use automatic selection on "gappyout" mode. This method only uses information based on gaps' distribution.
+#`-sgt`: Print accumulated gap percentage count.
+#`-out`: output file name
 #Mito_OF/
 ls Input_Files/*.fasta | while read file; do
 	full_file="${file##*/}"; #this line removes the path before the file name
@@ -3737,6 +3974,9 @@ docker run -v $PWD:$PWD  -w $PWD boussau/alesuite ALEmcmc_undated $PWD/species_t
 singularity exec ale.sif ALEobserve geneFamily.treelist
 singularity exec ale.sif ALEml_undated species_tree.newick geneFamily.treelist.ale
 singularity exec ale.sif ALEmcmc_undated species_tree.newick geneFamily.treelist.ale
+#note on commands: 
+#followed the instructions - program options aren't available using the Docker through Singularity version
+#chose the ml instead of the mcmc tree to save on computing power
 
 ```
 
@@ -4551,9 +4791,230 @@ Summary statistics (ALE):
 
 The `parse_ALE_Nodes_GFam_Annot.py` program iterates over a file containing data on the types of events taking place at each node per OG, and consolidates it into a summary data table showing the total number of each type of event occurring at each node with respect to OGs. The data to be used as input should be dreived from the results of the ALE program, after the initial parsing of the data with the `parse_ALE_Events.py` script and subsequent consolidation, or a filtered version of the same (via the `parse_ALE_Annotations.py` program in this workflow).
 
+```bash
+#finding the identity of the OGs predicted to be targeted to the mitochondria by Count
+#model: 
+python subfilter_Dollo.py input_db ref_db query_node pre_query_node output_extension
+#applying it: 
+python ../subfilter_Dollo.py Alanta_mito_3_OF_ALL__CountPivot__Dollo.txt Alanta_mito_3_OF_ALL__CountPivot.txt 5 6 Tvag
+#node 5 is Tvag, node 6 is the preceding ancestral node
+python ../subfilter_Dollo.py Alanta_mito_3_SP_ALL__CountPivot__Dollo.txt Alanta_mito_3_SP_ALL__CountPivot.txt 5 6 Tvag
+#finding the identity of the OGs predicted to be targeted to the mitochondria by ALE
+#we need the IDs of OGs originating at Node 44
+#first, generate the tables that can be parsed: 
+#model: 
+python parse_ALE_Nodes_GFam_Annot.py input_events [R_indexing_file]
+#applying it: 
+python parse_ALE_Nodes_GFam_Annot.py SP_Mito3__Events_Final.txt
+python parse_ALE_Nodes_GFam_Annot.py OF_Mito3__Events_Final.txt
+#next, identify the OGs present at the query node of a specific DTL event
+#model: 
+python subfilter_ALE_GFam_CHOICE.py input_db query_node DTL_search output_extension 
+#applying it: 
+python subfilter_ALE_GFam_CHOICE.py SP_Mito3__Events_Final_GFam.txt 44 Originations Tvag
+# Testing for DTL event Originations at node 44.
+python subfilter_ALE_GFam_CHOICE.py OF_Mito3__Events_Final_GFam.txt 44 Originations Tvag
+# Testing for DTL event Originations at node 44.
+#finding the overlap
+awk -F '\t' '(NR>1) {print $1}' Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag.txt > Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt
+sed -i -e 's/^/SP_Mito3__/' Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt
+awk -F '\t' '(NR>3) {print $1}' SP_Mito3__Events_Final_GFam_Tvag.txt > SP_Mito3__Events_Final_GFam_Tvag__OGs.txt
+comm -12 <(grep "OG" Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" SP_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort)
+comm -12 <(grep "OG" Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" SP_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) | wc -l
+awk -F '\t' '(NR>1) {print $1}' Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag.txt > Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt
+sed -i -e 's/^/OF_Mito3__/' Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt
+awk -F '\t' '(NR>3) {print $1}' OF_Mito3__Events_Final_GFam_Tvag.txt > OF_Mito3__Events_Final_GFam_Tvag__OGs.txt
+comm -12 <(grep "OG" Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" OF_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort)
+comm -12 <(grep "OG" Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" OF_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) | wc -l
+#finding the difference
+comm -23 <(grep "OG" Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" OF_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) | wc -l 
+comm -23 <(grep "OG" Alanta_mito_3_OF_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" OF_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) > OF_Mito3__CountALE_Divergence.txt
+comm -23 <(grep "OG" Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" SP_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) | wc -l 
+comm -23 <(grep "OG" Alanta_mito_3_SP_ALL__CountPivot__Dollo_Tvag__OGs.txt | sort) <(grep "OG" SP_Mito3__Events_Final_GFam_Tvag__OGs.txt | sort) > SP_Mito3__CountALE_Divergence.txt
+#checking if the different OGs are in the ALE dataset
+#ref: https://unix.stackexchange.com/questions/533737/how-to-check-if-a-string-from-file-exists-in-any-line-of-another-file-and-copy-t
+grep -Ff OF_Mito3__CountALE_Divergence.txt ../ALE_Data/OF_Mito3__Events_Final_PFam.txt
+grep -Ff SP_Mito3__CountALE_Divergence.txt ../ALE_Data/SP_Mito3__Events_Final_PFam.txt
+
+```
+
 The `subfilter_ALE_GFam_CHOICE.py` program parses data from the Gene Family-based reformatting of the ALE results data produced by the `parse_ALE_Nodes_GFam_Annot.py` program in order the return information on which type of DTL even occurred at which node of the species tree. It is intended for use on the original node IDs, not the R-reformatted ones. 
 
 Both of these scripts were used in the final analysis of results for the thesis report. They are made available in the TrichoCompare/DataAnalysis/ directory of the GitHub. 
+
+```bash
+#first, extracting the names of the query proteins from the MSA file
+#ref: https://stackoverflow.com/questions/10358547/how-to-grep-for-contents-after-pattern
+grep ">" OF_Mito3__OG0000060_MSAprep.fasta | sed 's/^.*__//' > OF_Mito3__OG0000060__OGprots.txt
+#now need to pull the relevant parts of the Metamonad database
+#model: 
+python extract_prot_db.py input_db input_prots output_db [search_col]
+#applying it: 
+python ../../Scripts/extract_prot_db.py ../Metamonada_Alanta_pred_OG_DB__scoreSecretion__scoreMitochondria_startAA.txt OF_Mito3__OG0000060__OGprots.txt Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt
+#now analyzing the predictions made in this database
+#MitoFates
+awk -F '\t' '{print $29}' Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt | sort | uniq -c
+#I left out the `(NR>1)` from the awk command so the column name would be visible in the output
+#it's visually messier, but prevents accidental querying of the wrong column
+#TargetP
+awk -F '\t' '{print $25}' Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt | sort | uniq -c
+#DeepLoc
+awk -F '\t' '{print $27}' Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt | sort | uniq -c
+#YLoc
+awk -F '\t' '{print $31}' Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt | sort | uniq -c
+
+```
+
+After the above, used python to figure out the species IDs of the proteins targeted to the cytoplasm. Access python on the command line by simply typing `python` into the command line. 
+
+```python
+#import pandas module
+import pandas as pd
+
+#import the database into a pandas dataframe
+input_df = pd.read_csv("Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.txt", sep = '\t', header=0)
+
+#create an empty list that will contain species IDs that match the query
+cyt_DL_list = []
+#next, iterate over the database to figure out the species representation
+for index, row in input_df.iterrows():
+	#iterate through the dataframe row by row
+		if row['DeepL_Location'] == "Cytoplasm": 
+			#identify rows where DL predicts a protein to be cytoplasmic
+			#and save the species ID to the list
+			cyt_DL_list.append(row["Species_Id"])
+len(cyt_DL_list)
+# 151
+#good, that matches the bash count
+#now, count those occurrances
+#ref: https://stackoverflow.com/questions/3496518/using-a-dictionary-to-count-the-items-in-a-list
+from collections import Counter
+Counter(cyt_DL_list)
+
+#create an empty list that will contain species IDs that match the query
+cyt_YL_list = []
+#next, iterate over the database to figure out the species representation
+for index, row in input_df.iterrows():
+	#iterate through the dataframe row by row
+		if row['YLoc_Prediction'] == "cytoplasm": 
+			#identify rows where DL predicts a protein to be cytoplasmic
+			#and save the species ID to the list
+			cyt_YL_list.append(row["Species_Id"])
+len(cyt_YL_list)
+# 245
+#good, that matches the bash count
+#now, count those occurrances
+Counter(cyt_YL_list)
+
+#also trying this a different way: 
+#what predictions are associated with Giardia genomes? 
+
+#create empty lists for YLoc and DeepLoc predictions
+giardia_DL_pred = []
+giardia_YL_pred = []
+#ref: https://stackoverflow.com/questions/59905738/looping-over-dataframe-and-selecting-rows-based-on-substring-in-pandas
+value = 'Giardia'
+#save the substring to search for to a variable
+for index, row in input_df.iterrows():
+	#iterate over the dataframe row by row
+	if row['Species_Id'].startswith(value):
+		#identify rows that contain Giardia proteins
+		#and save those predictions to the appropriate lists
+		giardia_DL_pred.append(row['DeepL_Location'])
+		giardia_YL_pred.append(row['YLoc_Prediction'])
+Counter(giardia_DL_pred)
+Counter(giardia_YL_pred)
+
+exit()
+
+```
+
+Doing the same as above with the SonicParanoid version of the OG.
+
+```bash
+#first, extracting the names of the query proteins from the MSA file
+#ref: https://stackoverflow.com/questions/10358547/how-to-grep-for-contents-after-pattern
+grep ">" SP_Mito3__OG_55_MSAprep.fasta | sed 's/^.*__//' > SP_Mito3__OG_55__OGprots.txt
+#now need to pull the relevant parts of the Metamonad database
+#model: 
+python extract_prot_db.py input_db input_prots output_db [search_col]
+#applying it: 
+python ../../Scripts/extract_prot_db.py ../Metamonada_Alanta_pred_OG_DB__scoreSecretion__scoreMitochondria_startAA.txt SP_Mito3__OG_55__OGprots.txt Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt
+#now analyzing the predictions made in this database
+#MitoFates
+awk -F '\t' '{print $29}' Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt | sort | uniq -c
+#I left out the `(NR>1)` from the awk command so the column name would be visible in the output
+#it's visually messier, but prevents accidental querying of the wrong column
+#TargetP
+awk -F '\t' '{print $25}' Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt | sort | uniq -c
+#DeepLoc
+awk -F '\t' '{print $27}' Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt | sort | uniq -c
+#YLoc
+awk -F '\t' '{print $31}' Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt | sort | uniq -c
+
+```
+
+```python
+#import pandas module
+import pandas as pd
+
+#import the database into a pandas dataframe
+input_df = pd.read_csv("Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt", sep = '\t', header=0)
+
+#create an empty list that will contain species IDs that match the query
+cyt_DL_list = []
+#next, iterate over the database to figure out the species representation
+for index, row in input_df.iterrows():
+	#iterate through the dataframe row by row
+		if row['DeepL_Location'] == "Cytoplasm": 
+			#identify rows where DL predicts a protein to be cytoplasmic
+			#and save the species ID to the list
+			cyt_DL_list.append(row["Species_Id"])
+len(cyt_DL_list)
+# 140
+#good, that matches the bash count
+#now, count those occurrances
+#ref: https://stackoverflow.com/questions/3496518/using-a-dictionary-to-count-the-items-in-a-list
+from collections import Counter
+Counter(cyt_DL_list)
+
+#create an empty list that will contain species IDs that match the query
+cyt_YL_list = []
+#next, iterate over the database to figure out the species representation
+for index, row in input_df.iterrows():
+	#iterate through the dataframe row by row
+		if row['YLoc_Prediction'] == "cytoplasm": 
+			#identify rows where DL predicts a protein to be cytoplasmic
+			#and save the species ID to the list
+			cyt_YL_list.append(row["Species_Id"])
+len(cyt_YL_list)
+# 216
+#good, that matches the bash count
+#now, count those occurrances
+Counter(cyt_YL_list)
+
+#also trying this a different way: 
+#what predictions are associated with Giardia genomes? 
+
+#create empty lists for YLoc and DeepLoc predictions
+giardia_DL_pred = []
+giardia_YL_pred = []
+#ref: https://stackoverflow.com/questions/59905738/looping-over-dataframe-and-selecting-rows-based-on-substring-in-pandas
+value = 'Giardia'
+#save the substring to search for to a variable
+for index, row in input_df.iterrows():
+	#iterate over the dataframe row by row
+	if row['Species_Id'].startswith(value):
+		#identify rows that contain Giardia proteins
+		#and save those predictions to the appropriate lists
+		giardia_DL_pred.append(row['DeepL_Location'])
+		giardia_YL_pred.append(row['YLoc_Prediction'])
+Counter(giardia_DL_pred)
+Counter(giardia_YL_pred)
+
+exit()
+
+```
 
 
 ### Collecting statistics
@@ -4750,10 +5211,5 @@ python ../Scripts/og2IPRS_pivot.py Metamonada_Alanta_pred_OG_DB.txt SonicParanoi
 
 
 ## Citations
-
-
-
-
-## Versions
 
 f
