@@ -906,7 +906,7 @@ python assignFASTAheaders_v2.py DataReformatted/Anaeramoeba_lanta_160522.fasta e
 
 Additional scripts were written as safeguards and to flip between the encoded and original FASTA headers: 
  - `reverseHeaders.py`: 
-   - This program replaces the random alphanumeric headers assigned by the assignFASTAheaders.py program with the original FASTA headers, using the	reference file created by the other program as a guide.
+   - This program replaces the random alphanumeric headers assigned by the assignFASTAheaders.py program with the original FASTA headers, using the reference file created by the other program as a guide.
    - This script can be found in the TrichoCompare/FastaManipEtc/ directory of the GitHub. 
  - `decodeHeaders.py`: 
    - This program decodes the random alphanumeric headers assigned by the assignFASTAheaders.py program with the original FASTA headers, using the reference file created by the other program as a guide.
@@ -1366,9 +1366,9 @@ docker cp b80bcb53e981:/YLoc/Vi_results /home/inf-47-2020/ThesisTrich/YLoc_Resul
 # YLoc+* Fungi
 # YLoc+* Plants
 # Explanations for the options: 
-# YLoc-LowRes	predicts into 4 locations (nucleus, cytoplasm, mitochodrion, secretory pathway for the animal and fungi version) or 5 locations (in addition chloroplast for the plant version), respectively.
-# YLoc-HighRes	predicts into 9 or 10 locations, respectively. These are nucleus, cytoplasm, mitochodrion, plasma membrane, extracellular space, endoplasmic reticulum, peroxisome, and Golgi apparatus for all models. In addition, lysosome for the animal model, vacuole for the fungi model, and vacuole and chloroplast for the plant model.
-# YLoc+	predicts into 9 or 10 locations, as described above. In addition, it allows to predict multiple locations. It was trained, in addition to the 11 main eukaryotic location classes, on 7 multi-location classes.
+# YLoc-LowRes predicts into 4 locations (nucleus, cytoplasm, mitochodrion, secretory pathway for the animal and fungi version) or 5 locations (in addition chloroplast for the plant version), respectively.
+# YLoc-HighRes  predicts into 9 or 10 locations, respectively. These are nucleus, cytoplasm, mitochodrion, plasma membrane, extracellular space, endoplasmic reticulum, peroxisome, and Golgi apparatus for all models. In addition, lysosome for the animal model, vacuole for the fungi model, and vacuole and chloroplast for the plant model.
+# YLoc+ predicts into 9 or 10 locations, as described above. In addition, it allows to predict multiple locations. It was trained, in addition to the 11 main eukaryotic location classes, on 7 multi-location classes.
 # Used YLoc+ for best resolution; Used the YLoc+* version because the regular YLoc+ did not run
 python yloc.py /YLoc/Vi_hostDataOG/BM_newprots_may21.anaeromoeba_edit.fasta "YLoc+* Animals" BM_newprots_may21.anaeromoeba_edit_YL y > BM_newprots_may21.anaeromoeba_edit_YL.txt
 python yloc.py /YLoc/Vi_hostDataOG/BS_newprots_may21.anaeromoeba_edit.fasta "YLoc+* Animals" BS_newprots_may21.anaeromoeba_edit_YL y > BS_newprots_may21.anaeromoeba_edit_YL.txt
@@ -1548,13 +1548,13 @@ The results of all analysis programs were parsed with in-house scripts, in order
 The results of the functional annotation programs were parsed with the following scripts: 
  - EggNOG: 
    - `eggNOG_dn_Parser__v2.py`: This program parses the *.annotations results file produced by the EggNOG program when doing _de novo_ PFam searches and creates an output text file containing selected categories of information for each query sequence. 
-   - `eggNOG_dn_PFam_Parser__v2.py`: This program parses the _de novo_ PFam search results produced by the EggNOG program and creates an output text file containing selected categories of information		for each query sequence.
+   - `eggNOG_dn_PFam_Parser__v2.py`: This program parses the _de novo_ PFam search results produced by the EggNOG program and creates an output text file containing selected categories of information   for each query sequence.
    - `eggNOG_dn_PFam_Parser_bad.py`: This program parses the _de novo_ PFam search results produced by the eggNOG program and creates an output text file containing selected categories of information for each query sequence. This version of the EggNOG PFam parser is specifically intended for the "bad" output files, wherein the contents of the query and PFam hit columns have been reversed.
  - SignalP: `signalP_Parser__v2.py`: This program parses the SignalP summary search results and creates an output text file containing selected categories of information for each query sequence.
  - TargetP: `targetP_Parser__v2.py`: This program parses the TargetP summary search results and creates an output text file containing selected categories of information for each query sequence.
  - DeepLoc: `deepLoc_Parser__v2.py`: This program parses the DeepLoc search results and creates an output text file containing selected categories of information for each query sequence.
  - YLoc: `yLoc_Parser__v2.py`: This program parses the YLoc+* Animals search results and creates an output text file containing selected categories of information for each query sequence.
- - MitoFates: `mitoFates_Parser__v2.py`: This program parses the MitoFates summary search results and creates an output text file containing selected categories of information	for each query sequence.
+ - MitoFates: `mitoFates_Parser__v2.py`: This program parses the MitoFates summary search results and creates an output text file containing selected categories of information for each query sequence.
  - InterProScan: `iprScan_Parser.py`: This program parses the .tsv results file produced by the InterProScan program when it has been run with the command line options of `--goterms --iprlookup --pathways`and creates an output tab-separated text file containing selected categories of information for each query sequence.
  - Combined protein parser: `predictionParser__v2.py`: This program takes an input results file from a protein localization prediction software, and performs pre-determined data restructuring and extraction processes on the file. The resulting files can be combined into a large protein database. The prediction software whose results files can be used as input are: DeepLoc, SignalP, TargetP, EggNOG, PFam via EggNOG, YLoc, MitoFates, and InterProScan (with options: `--goterms --iprlookup --pathways`). 
 
@@ -1646,13 +1646,13 @@ The parsed results of the various analysis programs were eventually combined int
 #first, extracting the directory names from the FASTA files
 ls /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta > FileNames_Alanta.txt
 while read line; do
-	line2=${line::-11}; # _edit.fasta has 11 characters
-	line3=${line2:52}; #/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/ has 52 characters
-	echo $line3 >> SpeciesNames_Alanta.txt;
+  line2=${line::-11}; # _edit.fasta has 11 characters
+  line3=${line2:52}; #/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/ has 52 characters
+  echo $line3 >> SpeciesNames_Alanta.txt;
 done < FileNames_Alanta.txt
 #using the files above to create the species directories
 while read line; do
-	mkdir $line;
+  mkdir $line;
 done < ../SpeciesNames_Alanta.txt
 
 ```
@@ -1698,157 +1698,157 @@ cat SPECIES_FILE.Part01 SPECIES_temp.txt > SPECIES_PREDICT_DB
 #application: 
 #BM_newprots_may21.anaeromoeba
 ls BM_newprots_may21.anaeromoeba_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 BM_newprots_may21.anaeromoeba_edit_StandardAA.Part01_IPRScan.txt > BM_anaeromoeba_columns.txt
 #the above has to go after the loop because of the naming convention
 cat BM_anaeromoeba_columns.txt *_temp.txt > BM_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt
 #BS_newprots_may21.anaeromoeba
 ls BS_newprots_may21.anaeromoeba_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 BS_newprots_may21.anaeromoeba_edit_StandardAA.Part01_IPRScan.txt > BS_anaeromoeba_columns.txt
 #the above has to go after the loop because of the naming convention
 cat BS_anaeromoeba_columns.txt *_temp.txt > BS_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt
 #EP00764_Aduncisulcus_paluster
 ls EP00764_Aduncisulcus_paluster_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 EP00764_Aduncisulcus_paluster_edit_StandardAA.Part01_IPRScan.txt > EP00764_Aduncisulcus_paluster_columns.txt
 #the above has to go after the loop because of the naming convention
 cat EP00764_Aduncisulcus_paluster_columns.txt *_temp.txt > EP00764_Aduncisulcus_paluster_edit_StandardAA_IPRScan_final.txt
 #EP00770_Monocercomonoides_exilis
 ls EP00770_Monocercomonoides_exilis_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 EP00770_Monocercomonoides_exilis_edit_StandardAA.Part01_IPRScan.txt > EP00770_Monocercomonoides_exilis_columns.txt
 #the above has to go after the loop because of the naming convention
 cat EP00770_Monocercomonoides_exilis_columns.txt *_temp.txt > EP00770_Monocercomonoides_exilis_edit_StandardAA_IPRScan_final.txt
 #EP00792_Barthelona_sp_PAP020
 ls EP00792_Barthelona_sp_PAP020_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 EP00792_Barthelona_sp_PAP020_edit_StandardAA.Part01_IPRScan.txt > EP00792_Barthelona_sp_PAP020_columns.txt
 #the above has to go after the loop because of the naming convention
 cat EP00792_Barthelona_sp_PAP020_columns.txt *_temp.txt > EP00792_Barthelona_sp_PAP020_edit_StandardAA_IPRScan_final.txt
 #Histomonas_meleagridis.PRJNA594289
 ls Histomonas_meleagridis.PRJNA594289_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Histomonas_meleagridis.PRJNA594289_edit_StandardAA.Part01_IPRScan.txt > Histomonas_meleagridis.PRJNA594289_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Histomonas_meleagridis.PRJNA594289_columns.txt *_temp.txt > Histomonas_meleagridis.PRJNA594289_edit_StandardAA_IPRScan_final.txt
 #Kipferlia_bialata.PRJDB5223
 ls Kipferlia_bialata.PRJDB5223_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Kipferlia_bialata.PRJDB5223_edit_StandardAA.Part01_IPRScan.txt > Kipferlia_bialata.PRJDB5223_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Kipferlia_bialata.PRJDB5223_columns.txt *_temp.txt > Kipferlia_bialata.PRJDB5223_edit_StandardAA_IPRScan_final.txt
 #Pentatrichomonas_hominis.5728.aa
 ls Pentatrichomonas_hominis.5728.aa_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Pentatrichomonas_hominis.5728.aa_edit_StandardAA.Part01_IPRScan.txt > Pentatrichomonas_hominis.5728.aa_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Pentatrichomonas_hominis.5728.aa_columns.txt *_temp.txt > Pentatrichomonas_hominis.5728.aa_edit_StandardAA_IPRScan_final.txt
 ls Pentatrichomonas_hominis.5728.aa_edit.*_half_YL_YLparsed.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Pentatrichomonas_hominis.5728.aa_edit.1st_half_YL_YLparsed.txt > Pentatrichomonas_hominis.5728.aa_YL_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Pentatrichomonas_hominis.5728.aa_YL_columns.txt *YL_YLparsed_temp.txt > Pentatrichomonas_hominis.5728.aa_edit_YL_YLparsed_final.txt
 #SC_newprots_may21.anaeromoeba
 ls SC_newprots_may21.anaeromoeba_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 SC_newprots_may21.anaeromoeba_edit_StandardAA.Part01_IPRScan.txt > SC_anaeromoeba_columns.txt
 #the above has to go after the loop because of the naming convention
 cat SC_anaeromoeba_columns.txt *_temp.txt > SC_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt
 #Tetratrichomonas_gallinarum.5730.aa
 ls Tetratrichomonas_gallinarum.5730.aa_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Tetratrichomonas_gallinarum.5730.aa_edit_StandardAA.Part01_IPRScan.txt > Tetratrichomonas_gallinarum.5730.aa_IPRScan_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Tetratrichomonas_gallinarum.5730.aa_IPRScan_columns.txt *IPRScan_temp.txt > Tetratrichomonas_gallinarum.5730.aa_edit_StandardAA_IPRScan_final.txt
 ls Tetratrichomonas_gallinarum.5730.aa_edit.*_half_summary_TargetP.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Tetratrichomonas_gallinarum.5730.aa_edit.1st_half_summary_TargetP.txt > Tetratrichomonas_gallinarum.5730.aa_TargetP_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Tetratrichomonas_gallinarum.5730.aa_TargetP_columns.txt *TargetP_temp.txt > Tetratrichomonas_gallinarum.5730.aa_edit_summary_TargetP_final.txt
 ls Tetratrichomonas_gallinarum.5730.aa_edit.*_half_YL_YLparsed.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Tetratrichomonas_gallinarum.5730.aa_edit.1st_half_YL_YLparsed.txt > Tetratrichomonas_gallinarum.5730.aa_YL_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Tetratrichomonas_gallinarum.5730.aa_YL_columns.txt *YLparsed_temp.txt > Tetratrichomonas_gallinarum.5730.aa_YL_YLparsed_final.txt
 #Trichomonas_foetus.PRJNA345179
 ls Trichomonas_foetus.PRJNA345179_edit_StandardAA.Part*.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Trichomonas_foetus.PRJNA345179_edit_StandardAA.Part01_IPRScan.txt > Trichomonas_foetus.PRJNA345179_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Trichomonas_foetus.PRJNA345179_columns.txt *_temp.txt > Trichomonas_foetus.PRJNA345179_edit_StandardAA_IPRScan_final.txt
 #Trichomonas_vaginalis_GenBank.PRJNA16084
 ls Trichomonas_vaginalis_GenBank.PRJNA16084_edit.*_half_summary_TargetP.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Trichomonas_vaginalis_GenBank.PRJNA16084_edit.1st_half_summary_TargetP.txt > Trichomonas_vaginalis_GenBank.PRJNA16084_TargetP_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Trichomonas_vaginalis_GenBank.PRJNA16084_TargetP_columns.txt *TargetP_temp.txt > Trichomonas_vaginalis_GenBank.PRJNA16084_summary_TargetP_final.txt
 ls Trichomonas_vaginalis_GenBank.PRJNA16084_edit.*_half_YL_YLparsed.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Trichomonas_vaginalis_GenBank.PRJNA16084_edit.1st_half_YL_YLparsed.txt > Trichomonas_vaginalis_GenBank.PRJNA16084_YL_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Trichomonas_vaginalis_GenBank.PRJNA16084_YL_columns.txt *YLparsed_temp.txt > Trichomonas_vaginalis_GenBank.PRJNA16084_YL_YLparsed_final.txt
 #Trichomonas_vaginalis_RefSeq.G3
 ls Trichomonas_vaginalis_RefSeq.G3_edit.*_half_summary_TargetP.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Trichomonas_vaginalis_RefSeq.G3_edit.1st_half_summary_TargetP.txt > Trichomonas_vaginalis_RefSeq.G3_TargetP_columns.txt
 #the above has to go after the loop because of the naming convention
 cat Trichomonas_vaginalis_RefSeq.G3_TargetP_columns.txt *TargetP_temp.txt > Trichomonas_vaginalis_RefSeq.G3_summary_TargetP_final.txt
 ls Trichomonas_vaginalis_RefSeq.G3_edit.*_half_YL_YLparsed.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 Trichomonas_vaginalis_RefSeq.G3_edit.1st_half_YL_YLparsed.txt > Trichomonas_vaginalis_RefSeq.G3_YL_columns.txt
 #the above has to go after the loop because of the naming convention
@@ -1912,9 +1912,9 @@ Compile the species databases into one large flat database:
 ```bash
 #create temp versions of the files without column headers
 ls */*_predDB.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 #create a file with column headers
 head -1 BM_newprots_may21.anaeromoeba/BM_newprots_may21.anaeromoeba_predDB.txt > large_db_columns.txt
@@ -2047,10 +2047,10 @@ This process required the creation of reference files containing the proteins pr
 ```bash
 #extracting protein IDs for each FASTA file
 ls *.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	#extract the sequence header
-	awk 'sub(/^>/, "")' $file > ${file_base}_prots.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  #extract the sequence header
+  awk 'sub(/^>/, "")' $file > ${file_base}_prots.txt;
 done
 
 ```
@@ -2060,7 +2060,7 @@ The species identifiers were added into the files above using the `add_species.p
 ```bash
 #adding the species information into the OG databases
 ls *_prots.txt | while read file; do
-	python add_species.py $file;
+  python add_species.py $file;
 done
 #concatenating the files
 cat *_species.txt > species_prots_ref.txt
@@ -2158,29 +2158,29 @@ The following `bash` code was used to examine the number of OGs remaining after 
 #base files:
 #(these need to be separate because file names & structures are different)
 ls Broccoli_OGs_parsed.txt | while read file; do
-	echo $file;
-	awk -F '\t' '(NR>1) {print $2}' $file | sort | uniq | wc -l;
-	#calculate the number of unique OGs in the file
-	# `(NR>1)` skips the first line in the file (conatins the header)
-	awk 'END { print NR - 1 }' $file;
-	#calculate the number of protein queries (= lines - 1)
+  echo $file;
+  awk -F '\t' '(NR>1) {print $2}' $file | sort | uniq | wc -l;
+  #calculate the number of unique OGs in the file
+  # `(NR>1)` skips the first line in the file (conatins the header)
+  awk 'END { print NR - 1 }' $file;
+  #calculate the number of protein queries (= lines - 1)
 done
 ls *_OGs_parsed.txt | grep -v "Broccoli_OGs_parsed.txt" | while read file; do
-	echo $file;
-	awk -F '\t' '(NR>1) {print $3}' $file | sort | uniq | wc -l;
-	#calculate the number of unique OGs in the file
-	# `(NR>1)` skips the first line in the file (conatins the header)
-	awk 'END { print NR - 1 }' $file;
-	#calculate the number of protein queries (= lines - 1)
+  echo $file;
+  awk -F '\t' '(NR>1) {print $3}' $file | sort | uniq | wc -l;
+  #calculate the number of unique OGs in the file
+  # `(NR>1)` skips the first line in the file (conatins the header)
+  awk 'END { print NR - 1 }' $file;
+  #calculate the number of protein queries (= lines - 1)
 done
 #parsed files
 ls *_OGs_parsed_*.txt | while read file; do
-	echo $file;
-	awk -F '\t' '(NR>1) {print $2}' $file | sort | uniq | wc -l;
-	#calculate the number of unique OGs in the file
-	# `(NR>1)` skips the first line in the file (conatins the header)
-	awk 'END { print NR - 1 }' $file;
-	#calculate the number of protein queries (= lines - 1)
+  echo $file;
+  awk -F '\t' '(NR>1) {print $2}' $file | sort | uniq | wc -l;
+  #calculate the number of unique OGs in the file
+  # `(NR>1)` skips the first line in the file (conatins the header)
+  awk 'END { print NR - 1 }' $file;
+  #calculate the number of protein queries (= lines - 1)
 done
 
 ```
@@ -2209,7 +2209,7 @@ The `calc_seq_length.py` program was written to extract data on sequence lengths
 ```bash
 #running the program in a loop
 ls ../EncodedData/*.fasta | while read file; do
-	python calc_seq_length.py $file;
+  python calc_seq_length.py $file;
 done
 #concatenating the species-based files for use in the next script
 cat *__SeqLength.txt > prot_lengths_ref.txt
@@ -2280,7 +2280,7 @@ python ../../../Scripts/og_overlap_percent.py filt_prot_dict.json OG_membership_
 
 ```
 
-The `og_db_plusSpeciesRep__v2.py` program parses the parsed results of orthologous clustering software (OrthoFinder, SonicParanoid, ProteinOrtho, Broccoli) and creates an output file in the format: 			OG_ID\tSpecies_Percent\tSpecies_Represented\tPhylum_Percent\tPhyla_Represented
+The `og_db_plusSpeciesRep__v2.py` program parses the parsed results of orthologous clustering software (OrthoFinder, SonicParanoid, ProteinOrtho, Broccoli) and creates an output file in the format:       OG_ID\tSpecies_Percent\tSpecies_Represented\tPhylum_Percent\tPhyla_Represented
 
 The script is made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. 
 
@@ -2455,14 +2455,14 @@ The above scripts are made available in the TrichoCompare/PathwaysFilt/ director
 python assess_startAA.py input_fasta
 #applying it:  
 ls /home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/*.fasta | while read file; do
-	python ../../Scripts/assess_startAA.py $file;
+  python ../../Scripts/assess_startAA.py $file;
 done
 mv ../../DataFiles/EncodedData/*_startAA.txt .
 #editing the files and compiling into one large dataframe
 ls *.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 BM_newprots_may21.anaeromoeba_edit_startAA.txt > StartAA_columns.txt
 #the above has to go after the loop because of the naming convention
@@ -2833,15 +2833,15 @@ nano Header_line.txt
 #includes: Query\tpfamEN_hit
 #create temp versions of the files without column headers
 ls *_PFam.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 #create minimized versions of these files with only two columns
 ls *_temp.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	awk -F '\t' '{print $1"\t"$2}' $file > ${file_base}_temp2.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  awk -F '\t' '{print $1"\t"$2}' $file > ${file_base}_temp2.txt;
 done
 #concatenate the files together
 cat Header_line.txt *_temp2.txt > Metamonada_AlantaPFam.txt
@@ -2949,7 +2949,7 @@ The Count program performs ancestral state reconstructions using traditional par
 
 ### Preparation
 
-The `og_prot_spp_list.py` program filters any version of the large Metamonad database that includes query IDs, species category designation, and OG ID information from the	orthologous clustering program of interest. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
+The `og_prot_spp_list.py` program filters any version of the large Metamonad database that includes query IDs, species category designation, and OG ID information from the orthologous clustering program of interest. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
 
 ```bash
 #model: 
@@ -3021,7 +3021,7 @@ The resulting tree is saved with the file name SpeciesTree_rooted_at_outgroup_22
 
 Both of these trees are made available in the TrichoCompare/ReferenceFiles/ directory of the GitHub. 
 
-![Species tree rooted at outgroup 22](Count/SpeciesTree_rooted_at_outgroup_22.png)
+![Species tree rooted at outgroup 22](README_FigsEtc/SpeciesTree_rooted_at_outgroup_22.png)
 
 The text of the OrthoFinder SpeciesTree_rooted_at_outgroup_22.txt Newick tree is below: 
 
@@ -3034,6 +3034,33 @@ The text of the edited SpeciesTree_rooted_at_outgroup_22_NameEdit.nwk Newick tre
 ```text
 ((("Anaeramoeba_lanta_160522":0.450921,("BM_newprots_may21.anaeromoeba":0.335199,("SC_newprots_may21.anaeromoeba":0.00659918,"BS_newprots_may21.anaeromoeba":9.97265e-06)N12:0.324153)N7:0.0752971)N3:0.085195,((("Tetratrichomonas_gallinarum.5730.aa":0.0016019,"Pentatrichomonas_hominis.5728.aa":0.0345883)N13:0.134371,("Trichomonas_vaginalis_GenBank.PRJNA16084":9.97265e-06,"Trichomonas_vaginalis_RefSeq.G3":9.97265e-06)N14:0.174424)N8:0.0916459,(("Dientamoeba_fragilis.43352.aa":0.159906,("Histomonas_meleagridis.PRJNA594289":0.0108462,"Histomonas_meleagridis.135588.aa":0.0901299)N18:0.120525)N15:0.0690226,"Tritrichomonas_foetus.PRJNA345179":0.17672)N9:0.0769582)N4:0.279032)N1:0.0329942,((("EP00708_Paratrimastix_pyriformis":0.302018,"EP00771_Trimastix_marina":0.370245)N10:0.0929272,"EP00770_Monocercomonoides_exilis":0.432518)N5:0.0989893,("EP00792_Barthelona_sp_PAP020":0.499294,(("EP00769_Ergobibamus_cyprinoides":0.490135,"Carpediemonas_membranifera.PRJNA719540":0.461779)N16:0.0460798,("EP00764_Aduncisulcus_paluster":0.4689,(("EP00766_Chilomastix_caulleryi":0.576054,"EP00767_Chilomastix_cuspidata":0.427461)N20:0.143484,("Kipferlia_bialata.PRJDB5223":0.393386,("EP00768_Dysnectes_brevis":0.360694,(("Spironucleus_salmonicida.PRJNA60811":0.357159,"EP00703_Trepomonas_sp_PC1":0.340399)N24:0.154188,("Giardia_muris.PRJNA524057":0.250193,(("GiardiaDB_GintestinalisEP15":0.0161814,("GiardiaDB_GintestinalisADH":0.0045674,("EP00701_Giardia_intestinalis":9.97265e-06,"Giardia_intestinalis.PRJNA1439":9.97265e-06)N30:0.00343865)N29:0.016551)N27:0.0203631,("GiardiaDB_GintestinalisBGS":0.00134291,"GiardiaDB_GintestinalisBGS_B":0.00664544)N28:0.0390068)N26:0.204119)N25:0.212948)N23:0.13267)N22:0.0832471)N21:0.0437682)N19:0.0502614)N17:0.0394533)N11:0.0430432)N6:0.0327792)N2:0.0329942)N0;
 ```
+
+Process of running Count analysis:
+  - Open program by clicking icon (requires Java)
+  - "Session" tab at top → "Start new session ..." → select phylogenetic tree file in Newick format (in our case, SpeciesTree_rooted_at_outgroup_22_NameEdit.nwk)
+    - This tree file is a slightly edited version of the tree output by OrthoFinder (SpeciesTree_rooted_at_outgroup_22.txt): The species names have been changed to the match the shortened versions used in the Trich_Parab database in a text editor, and the file was subsequently saved with a .nwk extension as opposed to the original .txt.
+    - A phylogenetic tree will be displayed in the window; note that branch lengths are not extracted by Count from the Newick file.
+  - "Data" tab at top → "Open annotated table..." → selected annotated count data file (for ex.: Alanta_mito_3_SP_ALL__CountPivot.txt)
+  - "Data" tab at top → "Transform numerical profiles into binary (presence/absence) profiles"
+    - By right-clicking on the new "01:Filt OG PFam Counts2  AnnotCLEAN.txt" we can save this file: "Save as..." → Alanta_mito_3_SP_ALL__CountPivot__Binary.txt
+  - "Rates" tab at the top → "Optimize rates..." → A window opens with a number of options - the ones selected for this analysis are the defaults, pictured in the two images below.
+    - After the rates have finished being optimized, a table is displayed, and the species tree showing rates of OG (gene family, in Count's terms) loss, duplication and gain will be shown. (Unfortunately, it does not appear possible to export this graphic from the program. A screenshot of the tree is included below, along with a screenshot of the rates window post-analysis.)
+  - "Analysis" tab at the top → "Family history by Dollo parsimony"
+    - In this tab, it's possible to examine where each of these OGs was gained, lost and duplicated in the lineage.
+    - Highlighting all OGs (CTRL+A) generates a summary of OG losses and gains in the entire tree.
+    - The results of the Dollo parsimony can bes saved in a tab-separated .txt file (for ex.: Alanta_mito_3_SP_ALL__CountPivot__Dollo.txt)
+  - ///saving and reopening below///
+  - To save the session: "Session" tab at the top → "Save everything ..." → Assign the file a name
+    - Note that the save file does not automatically provide a file extension, but this isn't an issue.
+    - The file saved is in .xml format, and whether or not the user manually adds the .xml extension, Count will be able to open the session file.
+    - In other words: A file named "Alanta_mito_3_SP_ALL__CountPivot__Session" and a file named "Alanta_mito_3_SP_ALL__CountPivot__Session.xml" can both be opened by Count, should the user forget to add the .xml extension to the file base name.
+  - To reopen a saved session: "Session" tab at the top → "Open previously saved session(s) ..." → select the session file to be opened by Count
+
+Rate optimization selected options:
+
+!["Rate optimization" window: "Model type" tab](README_FigsEtc/RateOptimization_1pt1.png)
+
+!["Rate optimization" window: "Model parameters" tab](README_FigsEtc/RateOptimization_1pt2.png)
 
 Proceed with the statistics from the Dollo Parsimony: 
 
@@ -3070,7 +3097,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 32
    - Loss: 53
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](Count/Alanta_ALL/Alanta_mito_3_OF__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_OF__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Mitochondria 3 SP
@@ -3106,7 +3133,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 33
    - Loss: 65
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](Count/Alanta_ALL/Alanta_mito_3_SP__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_SP__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Secretome 3 OF
@@ -3142,7 +3169,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 39
    - Loss: 133
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](Count/Alanta_ALL/Alanta_sec_3_OF__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_OF__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Secretome 3 SP
@@ -3178,7 +3205,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 35
    - Loss: 134
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](Count/Alanta_ALL/Alanta_sec_3_SP__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_SP__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Dollo Parsimony Filtration
@@ -3240,7 +3267,7 @@ python ../subfilter_Dollo_LCA.py Alanta_sec_3_SP_ALL__CountPivot__Dollo.txt Alan
 
 ```
 
-The `subfilter_Dollo_CHOICE.py` program uses data from the Count program to filter the input file used for Count down to the OGs which are ancestral to a node relative to the previous	node on the evolutionary tree. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
+The `subfilter_Dollo_CHOICE.py` program uses data from the Count program to filter the input file used for Count down to the OGs which are ancestral to a node relative to the previous node on the evolutionary tree. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
 
 ```bash
 #model: 
@@ -3316,7 +3343,7 @@ grep -o -P '(?<=PFam_).*(?=.xml)' Overlap_PFams_printout.txt > Overlap_PFams.txt
 
 The `parse_OG_PFam_XML.py` program iterates over an indexing file created by `parse_OG_PFams.py` (or similar file in in the same format: [OG_PROGRAM]_OG\tAssocPFams) with the aid of PFam domain XML-formatted informational files created with `retrieve_PFam_XML.py`, in order to create a large database in the format: 
 
-> PFam_IDs\tSonicParanoid_OG\tPFamAccesion\tAlt_Name\tPFam_Description\tMolFunc_GO_ID\t				MolFunc_GO_Desc\tBiolProc_GO_ID\tBiolProc_GO_Desc\tCellComp_GO_ID\tCellComp_GO_Desc
+> PFam_IDs\tSonicParanoid_OG\tPFamAccesion\tAlt_Name\tPFam_Description\tMolFunc_GO_ID\t       MolFunc_GO_Desc\tBiolProc_GO_ID\tBiolProc_GO_Desc\tCellComp_GO_ID\tCellComp_GO_Desc
 
 This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
 
@@ -3495,19 +3522,19 @@ python extract_OG_MSA.py input_db data_path
 #applying it:
 #in Mito_OF/
 ls ../../Input_FASTA_OG_DBs/Mito_OF/OF_Mito3__OG00*.txt | while read file; do
-	python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
+  python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
 done
 #in Mito_SP/
 ls ../../Input_FASTA_OG_DBs/Mito_SP/SP_Mito3__OG_*.txt | while read file; do
-	python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
+  python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
 done
 #in Sec_OF/
 ls ../../Input_FASTA_OG_DBs/Sec_OF/OF_Sec3__OG00*.txt | while read file; do
-	python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
+  python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
 done
 #in Sec_SP/
 ls ../../Input_FASTA_OG_DBs/Sec_SP/SP_Sec3__OG_*.txt | while read file; do
-	python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
+  python ../../../Scripts/extract_OG_MSA.py $file "/home/inf-47-2020/ThesisTrich/DataFiles/EncodedData/"; 
 done
 
 ```
@@ -3525,18 +3552,18 @@ conda activate env-MAFFT
 # OR: `linsi input [> output]`
 #in Mito_SP/
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Mito_SP/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
-	mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
+  mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
 done &
 #in Mito_OF/
 #saving the following to mito_OF3_Round0.sh
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Mito_OF/OF_Mito3__OG000*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
-	mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
+  mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
 done &
 #saving similar scripts with different "Round#" to signify different portions of the OG list 
 #and then running those scripts as below, with nohup
@@ -3554,10 +3581,10 @@ nohup ./mito_OF3_Round5.sh &> nohup5.out &
 nohup ./mito_OF3_Round7.sh &> nohup7.out &
 #in Sec_OF/
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Sec_OF/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
-	mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
+  mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
 done &
 #variation of script above in smaller run scripts
 chmod +x sec_OF3_Round*
@@ -3581,10 +3608,10 @@ grep -v ">" *.fasta | grep "U"
 mafft --localpair --maxiterate 1000 --amino --quiet /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/OF_Sec3__OG0003668_noU_MSAprep.fasta > OF_Sec3__OG0003668_noU_MSA.fasta
 #in Sec_SP/
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Sec_SP/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
-	mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_msa_base="${file_base%_MSAprep}"; #this removes the "_MSAprep" substring
+  mafft --localpair --maxiterate 1000 --amino --quiet $file > ${file_msa_base}_MSA.fasta;
 done &
 #variation of script above in numbered mini-scripts
 chmod +x sec_SP3_Round*
@@ -3614,41 +3641,41 @@ Alignments of clusters with less than 4 sequences were removed at this stage.
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' OF_Mito3__OG00* > 4seq_Mito_OF_Index.txt
 #double check that worked
 while read line; do
-	grep -c ">" $line; 
+  grep -c ">" $line; 
 done < 4seq_Mito_OF_Index.txt
 #moving over to work in the ThesisTrich/TrimAl_Results/Mito_OF/Input_Files/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_OF/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_OF/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_OF/4seq_Mito_OF_Index.txt
 #Mito_SP/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' SP_Mito3__OG_* > 4seq_Mito_SP_Index.txt
 #double check that worked
 while read line; do
-	grep -c ">" $line; 
+  grep -c ">" $line; 
 done < 4seq_Mito_SP_Index.txt
 #moving over to work in the ThesisTrich/TrimAl_Results/Mito_SP/Input_Files/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_SP/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_SP/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Mito_SP/4seq_Mito_SP_Index.txt
 #Sec_OF/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' OF_Sec3__OG00* > 4seq_Sec_OF_Index.txt
 #double check that worked
 while read line; do
-	grep -c ">" $line; 
+  grep -c ">" $line; 
 done < 4seq_Sec_OF_Index.txt
 #moving over to work in the ThesisTrich/TrimAl_Results/Sec_OF/Input_Files/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_OF/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_OF/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_OF/4seq_Sec_OF_Index.txt
 #Sec_SP/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' SP_Sec3__OG_* > 4seq_Sec_SP_Index.txt
 #double check that worked
 while read line; do
-	grep -c ">" $line; 
+  grep -c ">" $line; 
 done < 4seq_Sec_SP_Index.txt
 #moving over to work in the ThesisTrich/TrimAl_Results/Sec_SP/Input_Files/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_SP/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_SP/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/MAFFT_MSA/MAFFT_Outputs/Sec_SP/4seq_Sec_SP_Index.txt
 
 ```
@@ -3669,33 +3696,33 @@ conda activate env-trimAl
 #`-out`: output file name
 #Mito_OF/
 ls Input_Files/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
 done
 #sequences composed entirely of gaps are removed entirely, and a warning message about these is printed to the stdout
 #copied the text and saved it in the file: Removed_seq_log_trimAl_MitoOF.txt
 #Mito_SP/
 ls Input_Files/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
 done
 #sequences composed entirely of gaps are removed entirely, and a warning message about these is printed to the stdout
 #copied the text and saved it in the file: Removed_seq_log_trimAl_MitoSP.txt
 #Sec_OF/
 ls Input_Files/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
 done
 #sequences composed entirely of gaps are removed entirely, and a warning message about these is printed to the stdout
 #copied the text and saved it in the file: Removed_seq_log_trimAl_SecOF.txt
 #Sec_SP/
 ls Input_Files/*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  trimal -in $file -out Trimmed_Files/${file_base}_trim.fasta -gappyout -sgt > Gap_Files/${file_base}_gapLog.txt; 
 done
 #sequences composed entirely of gaps are removed entirely, and a warning message about these is printed to the stdout
 #copied the text and saved it in the file: Removed_seq_log_trimAl_SecSP.txt
@@ -3713,25 +3740,25 @@ The trimmed alignment files need to be linked into the relevant IQ-tree director
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' OF_Mito3__OG00* > 4seqTrim_Mito_OF_Index.txt
 #moving over to work in the ThesisTrich/IQ-TREE_Results/Mito_OF/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_OF/Trimmed_Files/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_OF/Trimmed_Files/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_OF/4seqTrim_Mito_OF_Index.txt
 #Mito_SP/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' SP_Mito3__OG_* > 4seqTrim_Mito_SP_Index.txt
 #moving over to work in the ThesisTrich/IQ-TREE_Results/Mito_SP/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_SP/Trimmed_Files/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_SP/Trimmed_Files/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/TrimAl_Results/Mito_SP/4seqTrim_Mito_SP_Index.txt
 #Sec_OF/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' OF_Sec3__OG00* > 4seqTrim_Sec_OF_Index.txt
 #moving over to work in the ThesisTrich/IQ-TREE_Results/Sec_OF/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_OF/Trimmed_Files/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_OF/Trimmed_Files/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_OF/4seqTrim_Sec_OF_Index.txt
 #Sec_SP/
 awk 'FNR==1{n=0} />/{++n} n>3{print FILENAME; nextfile}' SP_Sec3__OG_* > 4seqTrim_Sec_SP_Index.txt
 #moving over to work in the ThesisTrich/IQ-TREE_Results/Sec_SP/ directory
 while read line; do
-	ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_SP/Trimmed_Files/${line} . ; 
+  ln -s /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_SP/Trimmed_Files/${line} . ; 
 done < /home/inf-47-2020/ThesisTrich/TrimAl_Results/Sec_SP/4seqTrim_Sec_SP_Index.txt
 
 ```
@@ -3746,14 +3773,14 @@ The IQ-TREE program will be used to create the sample of gene trees used as inpu
 conda activate env-IQ-TREE
 #the model command is based on the methods in Martijn et al. 2020
 nohup iqtree -s SP_Sec3__OG_990_MSA_trim.fasta \
-	--prefix SP_Sec3__OG_990_MSA_IQ \
-	-m MFP \
-	-B 1000 -bnni \
-	-mset LG \
-	-madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 \
-	-seed 12345 \
-	-wbtl \
-	-T AUTO -ntmax 15 &
+  --prefix SP_Sec3__OG_990_MSA_IQ \
+  -m MFP \
+  -B 1000 -bnni \
+  -mset LG \
+  -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 \
+  -seed 12345 \
+  -wbtl \
+  -T AUTO -ntmax 15 &
 #-s specify the name of the alignment file (always required by IQ-TREE to work)
 #--prefix Output file basename
 #-m specify the model name to use during the analysis. 
@@ -3776,14 +3803,14 @@ nohup iqtree -s SP_Sec3__OG_990_MSA_trim.fasta \
 nohup iqtree -s OF_Mito3__OG0000000_MSA_trim.fasta --prefix OF_Mito3__OG0000000_MSA_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -seed 12345 -wbtl -T AUTO -ntmax 15 &> nohup_OF_Mito3__OG0000000.out &
 #other OGs were run in loops, like so: 
 nohup ls OF_Mito3__OG000002*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	mkdir $dir_base; #create a directory based on the file name
-	iqtree -s $file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -seed 12345 -wbtl -T AUTO -ntmax 15;
-	cp $file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
-	mv ${file_tree_base}_IQ.* ${dir_base}; #moving the results files into the OG directory
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  mkdir $dir_base; #create a directory based on the file name
+  iqtree -s $file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -seed 12345 -wbtl -T AUTO -ntmax 15;
+  cp $file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
+  mv ${file_tree_base}_IQ.* ${dir_base}; #moving the results files into the OG directory
 done &> nohup_20.out &
 #this was repeated in loops containing varying numbers of OGs, for all 4 main filtrations: 
 #Mito_OF, Mito_SP, Sec_OF, & Sec_SP
@@ -3795,12 +3822,12 @@ nohup ./remnant_IQ-TREE_4.sh &> nohup_remnant_IQ-TREE_4.out &
 nohup ./remnant_IQ-TREE_5.sh &> nohup_remnant_IQ-TREE_5.out &
 #checking for files that were missed
 ls SP_Mito3__OG_*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	if [ ! -d "${dir_base}" ] ; then
-		echo ${full_file} ; 
-	fi ; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  if [ ! -d "${dir_base}" ] ; then
+    echo ${full_file} ; 
+  fi ; 
 done
 #followed up on results
 #also identified an additional error to follow up on
@@ -3848,12 +3875,12 @@ nohup ./remnant_IQ-TREE_12.sh &> nohup_remnant_IQ-TREE_12.out &
 nohup ./remnant_IQ-TREE_13.sh &> nohup_remnant_IQ-TREE_13.out &
 #looking for files that were missed
 ls SP_Sec3__OG_*.fasta | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	if [ ! -d "${dir_base}" ] ; then
-		echo ${full_file} ; 
-	fi ; 
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  if [ ! -d "${dir_base}" ] ; then
+    echo ${full_file} ; 
+  fi ; 
 done
 #followed up on results
 #looking for direcotries with too many files
@@ -3874,15 +3901,15 @@ grep -l "ERROR: Cannot write to file" */*.log | grep -o -P '(?<=\/).*(?=_IQ.log)
 grep -l "ERROR: It makes no sense to perform bootstrap with less than 4 sequences." */*.log | grep -o -P '(?<=\/).*(?=_IQ.log)' | sed -e 's/$/_trim.fasta/' > 4seq_reruns_MitoOF.txt
 #rerunning the files based on the data collected above
 for full_file in `cat 4seq_reruns_MitoOF.txt` ; do
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	#zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
-	#mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
-	#don't need the zip commands since these are already done
-	iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
-	cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
-	mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  #zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
+  #mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
+  #don't need the zip commands since these are already done
+  iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
+  cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
+  mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
 done
 #saved the above loop to 4seq_reruns_MitoOF_v2.sh
 chmod +x 4seq_reruns_MitoOF_v2.sh
@@ -3892,14 +3919,14 @@ grep -c "ALISIM" nohup_4seq_MitoOF_v2.out
 #Mito_SP/
 grep -l "ERROR: It makes no sense to perform bootstrap with less than 4 sequences." */*.log | grep -o -P '(?<=\/).*(?=_IQ.log)' | sed -e 's/$/_trim.fasta/' > 4seq_reruns_MitoSP.txt
 for full_file in `cat 4seq_reruns_MitoSP.txt` ; do
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
-	mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
-	iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
-	cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
-	mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
+  mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
+  iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
+  cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
+  mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
 done
 #saved the above to 4seq_reruns_MitoSP.sh
 chmod +x 4seq_reruns_MitoSP.sh
@@ -3909,14 +3936,14 @@ grep -c "ALISIM" nohup_4seq_MitoSP.out
 #Sec_OF/
 grep -l "ERROR: It makes no sense to perform bootstrap with less than 4 sequences." */*.log | grep -o -P '(?<=\/).*(?=_IQ.log)' | sed -e 's/$/_trim.fasta/' > 4seq_reruns_SecOF.txt
 for full_file in `cat 4seq_reruns_SecOF.txt` ; do
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
-	mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
-	iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
-	cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
-	mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
+  mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
+  iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
+  cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
+  mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
 done
 #saved the above to 4seq_reruns_SecOF.sh
 chmod +x 4seq_reruns_SecOF.sh
@@ -3926,14 +3953,14 @@ grep -c "ALISIM" nohup_4seq_SecOF.out
 #Sec_SP/
 grep -l "ERROR: It makes no sense to perform bootstrap with less than 4 sequences." */*.log | grep -o -P '(?<=\/).*(?=_IQ.log)' | sed -e 's/$/_trim.fasta/' > 4seq_reruns_SecSP.txt
 for full_file in `cat 4seq_reruns_SecSP.txt` ; do
-	file_base="${full_file%.*}"; #this line removes the file extension
-	file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
-	dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
-	zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
-	mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
-	iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
-	cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
-	mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
+  file_base="${full_file%.*}"; #this line removes the file extension
+  file_tree_base="${file_base%_trim}"; #this removes the "_trim" substring
+  dir_base="${file_base%_MSA_trim}"; #this removes the "_MSA_trim" substring
+  zip -m ${file_base}_Pre-Keep-Ident ${dir_base}/*; #zip files in directory, removing as you go
+  mv ${file_base}_Pre-Keep-Ident.zip ${dir_base}/ ;
+  iqtree -s $full_file --prefix ${file_tree_base}_IQ -m MFP -B 1000 -bnni -mset LG -madd LG+C10,LG+C20,LG+C30,LG+C40,LG+C50,LG+C60 -keep-ident -seed 12345 -wbtl -T AUTO -ntmax 15;
+  cp $full_file ${dir_base}/ ; #copy the FASTA file in the OG IQ-TREE directory
+  mv ${file_tree_base}_IQ.* ${dir_base}/ ; #moving the results files into the OG directory
 done
 #saved the above to 4seq_reruns_SecSP.sh
 chmod +x 4seq_reruns_SecSP.sh
@@ -4001,12 +4028,12 @@ Below, the actual process of running the ALE program:
 ```bash
 #Mito_OF/
 ls *.ufboot | while read file; do
-	python ../../Scripts/ale_tree_spp_names.py $file;
+  python ../../Scripts/ale_tree_spp_names.py $file;
 done
 #for some reason, Uppmax doesn't like the multi-line version, so did the above in one line
 #now onto the ALE
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG000*.names.ufboot | while read file; do
-	singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_0.log;
+  singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_0.log;
 done &
 #the code above ran into the error below: 
 # terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<std::overflow_error> >'
@@ -4017,24 +4044,24 @@ done &
 #it returned the same error as above
 #unfortunately, it apears that the OrthoFinder OG named OG0000000 is too large (has too many members) for ALE to analyze
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG001*.names.ufboot | while read file; do
-	singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_1.log;
+  singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_1.log;
 done &
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG002*.names.ufboot | while read file; do
-	singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_2.log;
+  singularity exec ale.sif ALEobserve $file >> ../ALE_Files/Mito_OF/ALEobserve_MitoOF_2.log;
 done &
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG000*.names.ufboot.ale | while read file; do
-	singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_0.log;
-	rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
-	mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
+  singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_0.log;
+  rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
+  mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
 done &> nohup_Expected_bpp_error_MitoOF_0.log &
 #after these initial experiments in command line usage, I switched to the normal HPC batch script procedure
 sbatch aleML_loops_Mito_OF_1.sh
 sbatch aleML_loops_Mito_OF_2.sh
 sbatch aleML_loops_Mito_OF_3.sh
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG001*.names.ufboot.ale | while read file; do
-	singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_1.log;
-	rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
-	mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
+  singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_1.log;
+  rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
+  mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
 done &> nohup_Expected_bpp_error_MitoOF_1.log &
 #the loop above skipped one file
 #when I tried running that file manually, I ran into an an error that I was able to debug
@@ -4046,9 +4073,9 @@ grep ">B" GiardiaDB_GintestinalisBGS_B_edit.fasta
 grep ">B" GiardiaDB_GintestinalisBGS_B_edit.fasta | wc -l
 #before running those files that encountered this issue again
 nohup ls ../ALE_Files/Mito_OF/OF_Mito3__OG002*.names.ufboot.ale | while read file; do
-	singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_2.log;
-	rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
-	mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
+  singularity exec ale.sif ALEml_undated ../ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk $file >> ../ALE_Files/Mito_OF/ALEml_undated_MitoOF_2.log;
+  rm core.* ; #failed runs create a binary core.* file that isn't needed for anything
+  mv *.names.ufboot.ale.uml_rec ../ALE_Files/Mito_OF/ ; #move the file over to the results directory
 done &> nohup_Expected_bpp_error_MitoOF_2.log &
 #checked for missing files & ran those from a unique file list
 #ref: https://unix.stackexchange.com/questions/628848/find-filenames-of-one-extension-that-dont-have-a-matching-filename-of-a-differe
@@ -4057,13 +4084,13 @@ done &> nohup_Expected_bpp_error_MitoOF_2.log &
 find . -name "*.names.ufboot.ale" | perl -nle 's/\.names.ufboot.ale$/.names.ufboot.ale.uml_rec/; print unless -e' | cat -v | awk '{gsub(/.uml_rec$/,""); print}' | sed 's/^..//' > ALEml_missed_MitoOF.txt
 #now run these through a new batch run
 for file in `cat /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Mito_OF/ALEml_missed_MitoOF.txt` ; do
-	singularity exec /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/bin/ale.sif ALEml_undated /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Mito_OF/${file} >> /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Mito_OF/ALEml_undated_MitoOF_missed.log;
+  singularity exec /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/bin/ale.sif ALEml_undated /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Mito_OF/${file} >> /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Mito_OF/ALEml_undated_MitoOF_missed.log;
 done
 #the above is saved to aleML_loops_Mito_OF_4.sh
 sbatch aleML_loops_Mito_OF_4.sh
 #Mito_SP/
 ls *.ufboot | while read file; do
-	python ../../Scripts/ale_tree_spp_names.py $file;
+  python ../../Scripts/ale_tree_spp_names.py $file;
 done
 #correcting for the issue with the BGS files
 grep -l "G_intestinalis_BGS__B" SP_Mito3__OG_*.ufboot
@@ -4079,7 +4106,7 @@ sbatch aleML_loops_Mito_SP_2.sh
 sbatch aleML_loops_Mito_SP_3.sh
 #Sec_OF/
 nohup ls *.ufboot | while read file; do
-	python ../../Scripts/ale_tree_spp_names.py $file;
+  python ../../Scripts/ale_tree_spp_names.py $file;
 done &
 #now onto the ALE
 sbatch aleObserve_loops_Sec_OF.sh
@@ -4093,13 +4120,13 @@ sbatch aleML_loops_Sec_OF_5.sh
 find . -name "*.names.ufboot.ale" | perl -nle 's/\.names.ufboot.ale$/.names.ufboot.ale.uml_rec/; print unless -e' | cat -v | awk '{gsub(/.uml_rec$/,""); print}' | sed 's/^..//' > ALEml_missed_SecOF.txt
 #now run these through a new batch run
 for file in `cat /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Sec_OF/ALEml_missed_SecOF.txt` ; do
-	singularity exec /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/bin/ale.sif ALEml_undated /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Sec_OF/${file} >> /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Sec_OF/ALEml_undated_SecOF_missed.log;
+  singularity exec /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/bin/ale.sif ALEml_undated /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/SpeciesTree_rooted_at_outgroup_22_ALE.names.nwk /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Sec_OF/${file} >> /proj/rhodoquinone_2022/nobackup/Vi_TrichoCompare/ALE_Files/Sec_OF/ALEml_undated_SecOF_missed.log;
 done
 #the above is saved to aleML_loops_Sec_OF_6.sh
 sbatch aleML_loops_Sec_OF_6.sh
 #Sec_SP/
 ls *.ufboot | while read file; do
-	python ../../Scripts/ale_tree_spp_names.py $file;
+  python ../../Scripts/ale_tree_spp_names.py $file;
 done
 grep -l "G_intestinalis_BGS__B" SP_Sec3__OG_*.ufboot
 python ../../Scripts/ale_tree_spp_names.py SP_Sec3__OG_118_MSA_IQ.ufboot
@@ -4138,7 +4165,7 @@ The `parse_ALE_Events.py` program parses a *.ale.uml_rec file produced by the AL
 python parse_ALE_Events.py input_tree
 #applying it: 
 ls *.ale.uml_rec | while read file; do 
-	python parse_ALE_Events.py $file; 
+  python parse_ALE_Events.py $file; 
 done
 #1-line version for Uppmax: 
 ls *.ale.uml_rec | while read file; do python ../../Scripts/parse_ALE_Events.py $file; done
@@ -4157,9 +4184,9 @@ grep '^S:' $gene | cut -f2 > ${species_tree}.tree
 grep '^S:' SP_Mito3__OG_2636_MSA_IQ.names.ufboot.ale.uml_rec | cut -f2 > SP_Mito3_Species_Tree.nwk
 #and the dataframe consolidation
 ls *.events.txt | while read file; do
-	full_file="${file##*/}"; #this line removes the path before the file name
-	file_base="${full_file%.*}"; #this line removes the file extension
-	tail -n +2 $file > ${file_base}_temp.txt;
+  full_file="${file##*/}"; #this line removes the path before the file name
+  file_base="${full_file%.*}"; #this line removes the file extension
+  tail -n +2 $file > ${file_base}_temp.txt;
 done
 head -1 SP_Mito3__OG_2636_MSA_IQ_ALE.events.txt > Events_columns.txt
 #the above has to go after the loop because of the naming convention
@@ -4274,7 +4301,7 @@ Summary statistics (ALE):
    - Originations: 36
    - Copies: 576
 
-![ALE visualized results Mito OF](ALE/OF_Mito3_Species_Tree_ALL.svg)
+![ALE visualized results Mito OF](README_FigsEtc/OF_Mito3_Species_Tree_ALL.svg)
 
 
 ### Mitochondria 3 SP
@@ -4329,7 +4356,7 @@ Summary statistics (ALE):
    - Originations: 79
    - Copies: 447
 
-![ALE visualized results Mito SP](ALE/SP_Mito3_Species_Tree_ALL.svg)
+![ALE visualized results Mito SP](README_FigsEtc/SP_Mito3_Species_Tree_ALL.svg)
 
 
 ### Secretome 3 OF
@@ -4384,7 +4411,7 @@ Summary statistics (ALE):
    - Originations: 45
    - Copies: 1062
 
-![ALE visualized results Sec OF](ALE/OF_Sec3_Species_Tree_ALL.svg)
+![ALE visualized results Sec OF](README_FigsEtc/OF_Sec3_Species_Tree_ALL.svg)
 
 
 ### Secretome 3 SP
@@ -4439,7 +4466,7 @@ Summary statistics (ALE):
    - Originations: 39
    - Copies: 991
 
-![ALE visualized results Sec SP](ALE/SP_Sec3_Species_Tree_ALL.svg)
+![ALE visualized results Sec SP](README_FigsEtc/SP_Sec3_Species_Tree_ALL.svg)
 
 ### Further Parsing
 
@@ -4574,25 +4601,25 @@ python parse_ALE_Annotation.py SP_Sec3__Events_Final_PFam.txt OG SP_Sec3__OG_161
 #and now, need to convert all of these to R node versions in order to visualize them
 #Mito OF
 ls OF_Mito3__Events_Final_PFam__*.txt | while read file; do
-	python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
+  python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
 done
 #in 1 line for Ubuntu
 ls OF_Mito3__Events_Final_PFam__*.txt | while read file; do python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; done
 #Mito SP
 ls SP_Mito3__Events_Final_PFam__*.txt | while read file; do
-	python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
+  python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
 done
 #in 1 line for Ubuntu
 ls SP_Mito3__Events_Final_PFam__*.txt | while read file; do python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; done
 #Sec OF
 ls OF_Sec3__Events_Final_PFam__*.txt | while read file; do
-	python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
+  python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
 done
 #in 1 line for Ubuntu
 ls OF_Sec3__Events_Final_PFam__*.txt | while read file; do python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; done
 #Sec SP
 ls SP_Sec3__Events_Final_PFam__*.txt | while read file; do
-	python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
+  python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; 
 done
 #in 1 line for Ubuntu
 ls SP_Sec3__Events_Final_PFam__*.txt | while read file; do python parse_ALE_Nodes__v2.py $file ALE_2R_Indexing.txt; done
@@ -4607,6 +4634,14 @@ The `visualize_ALE_selection.R` script was written to accompany the `parse_ALE_V
 ### UpSet Plot
 
 The `upSetR_plots.R` program creates upset plots using the binary presence/absence data of OGs per species. This binary data was obtained via the Count software. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub.
+
+![UpSet Plot Mito OF](README_FigsEtc/Alanta_mito_3_OF_ALL__CountPivot__Binary_UpSetR.png)
+
+![UpSet Plot Mito SP](README_FigsEtc/Alanta_mito_3_SP_ALL__CountPivot__Binary_UpSetR.png)
+
+![UpSet Plot Sec OF](README_FigsEtc/Alanta_sec_3_OF_ALL__CountPivot__Binary_UpSetR.png)
+
+![UpSet Plot Sec SP](README_FigsEtc/Alanta_sec_3_SP_ALL__CountPivot__Binary_UpSetR.png)
 
 
 ### Additional Analyses
@@ -4667,7 +4702,7 @@ Summary statistics (ALE):
    - Originations: 35
    - Copies: 333
 
-![ALE visualized results Mito OF](ALE/OF_Mito3_Species_Tree_ALL_GFam.svg)
+![ALE visualized results Mito OF](README_FigsEtc/OF_Mito3_Species_Tree_ALL_GFam.svg)
 
 
 ### Mitochondria 3 SP
@@ -4706,7 +4741,7 @@ Summary statistics (ALE):
    - Originations: 33
    - Copies: 335
 
-![ALE visualized results Mito SP](ALE/SP_Mito3_Species_Tree_ALL_GFam.svg)
+![ALE visualized results Mito SP](README_FigsEtc/SP_Mito3_Species_Tree_ALL_GFam.svg)
 
 
 ### Secretome 3 OF
@@ -4745,7 +4780,7 @@ Summary statistics (ALE):
    - Originations: 44
    - Copies: 682
 
-![ALE visualized results Sec OF](ALE/OF_Sec3_Species_Tree_ALL_GFam.svg)
+![ALE visualized results Sec OF](README_FigsEtc/OF_Sec3_Species_Tree_ALL_GFam.svg)
 
 
 ### Secretome 3 SP
@@ -4784,7 +4819,7 @@ Summary statistics (ALE):
    - Originations: 38
    - Copies: 755
 
-![ALE visualized results Sec SP](ALE/SP_Sec3_Species_Tree_ALL_GFam.svg)
+![ALE visualized results Sec SP](README_FigsEtc/SP_Sec3_Species_Tree_ALL_GFam.svg)
 
 
 ### Additional Gene Family Parsing
@@ -4878,11 +4913,11 @@ input_df = pd.read_csv("Metamonada_Alanta_pred_OG_DB_FULL__OF_Mito3__OG0000060.t
 cyt_DL_list = []
 #next, iterate over the database to figure out the species representation
 for index, row in input_df.iterrows():
-	#iterate through the dataframe row by row
-		if row['DeepL_Location'] == "Cytoplasm": 
-			#identify rows where DL predicts a protein to be cytoplasmic
-			#and save the species ID to the list
-			cyt_DL_list.append(row["Species_Id"])
+  #iterate through the dataframe row by row
+    if row['DeepL_Location'] == "Cytoplasm": 
+      #identify rows where DL predicts a protein to be cytoplasmic
+      #and save the species ID to the list
+      cyt_DL_list.append(row["Species_Id"])
 len(cyt_DL_list)
 # 151
 #good, that matches the bash count
@@ -4895,11 +4930,11 @@ Counter(cyt_DL_list)
 cyt_YL_list = []
 #next, iterate over the database to figure out the species representation
 for index, row in input_df.iterrows():
-	#iterate through the dataframe row by row
-		if row['YLoc_Prediction'] == "cytoplasm": 
-			#identify rows where DL predicts a protein to be cytoplasmic
-			#and save the species ID to the list
-			cyt_YL_list.append(row["Species_Id"])
+  #iterate through the dataframe row by row
+    if row['YLoc_Prediction'] == "cytoplasm": 
+      #identify rows where DL predicts a protein to be cytoplasmic
+      #and save the species ID to the list
+      cyt_YL_list.append(row["Species_Id"])
 len(cyt_YL_list)
 # 245
 #good, that matches the bash count
@@ -4916,12 +4951,12 @@ giardia_YL_pred = []
 value = 'Giardia'
 #save the substring to search for to a variable
 for index, row in input_df.iterrows():
-	#iterate over the dataframe row by row
-	if row['Species_Id'].startswith(value):
-		#identify rows that contain Giardia proteins
-		#and save those predictions to the appropriate lists
-		giardia_DL_pred.append(row['DeepL_Location'])
-		giardia_YL_pred.append(row['YLoc_Prediction'])
+  #iterate over the dataframe row by row
+  if row['Species_Id'].startswith(value):
+    #identify rows that contain Giardia proteins
+    #and save those predictions to the appropriate lists
+    giardia_DL_pred.append(row['DeepL_Location'])
+    giardia_YL_pred.append(row['YLoc_Prediction'])
 Counter(giardia_DL_pred)
 Counter(giardia_YL_pred)
 
@@ -4965,11 +5000,11 @@ input_df = pd.read_csv("Metamonada_Alanta_pred_OG_DB_FULL__SP_Mito3__OG_55.txt",
 cyt_DL_list = []
 #next, iterate over the database to figure out the species representation
 for index, row in input_df.iterrows():
-	#iterate through the dataframe row by row
-		if row['DeepL_Location'] == "Cytoplasm": 
-			#identify rows where DL predicts a protein to be cytoplasmic
-			#and save the species ID to the list
-			cyt_DL_list.append(row["Species_Id"])
+  #iterate through the dataframe row by row
+    if row['DeepL_Location'] == "Cytoplasm": 
+      #identify rows where DL predicts a protein to be cytoplasmic
+      #and save the species ID to the list
+      cyt_DL_list.append(row["Species_Id"])
 len(cyt_DL_list)
 # 140
 #good, that matches the bash count
@@ -4982,11 +5017,11 @@ Counter(cyt_DL_list)
 cyt_YL_list = []
 #next, iterate over the database to figure out the species representation
 for index, row in input_df.iterrows():
-	#iterate through the dataframe row by row
-		if row['YLoc_Prediction'] == "cytoplasm": 
-			#identify rows where DL predicts a protein to be cytoplasmic
-			#and save the species ID to the list
-			cyt_YL_list.append(row["Species_Id"])
+  #iterate through the dataframe row by row
+    if row['YLoc_Prediction'] == "cytoplasm": 
+      #identify rows where DL predicts a protein to be cytoplasmic
+      #and save the species ID to the list
+      cyt_YL_list.append(row["Species_Id"])
 len(cyt_YL_list)
 # 216
 #good, that matches the bash count
@@ -5003,12 +5038,12 @@ giardia_YL_pred = []
 value = 'Giardia'
 #save the substring to search for to a variable
 for index, row in input_df.iterrows():
-	#iterate over the dataframe row by row
-	if row['Species_Id'].startswith(value):
-		#identify rows that contain Giardia proteins
-		#and save those predictions to the appropriate lists
-		giardia_DL_pred.append(row['DeepL_Location'])
-		giardia_YL_pred.append(row['YLoc_Prediction'])
+  #iterate over the dataframe row by row
+  if row['Species_Id'].startswith(value):
+    #identify rows that contain Giardia proteins
+    #and save those predictions to the appropriate lists
+    giardia_DL_pred.append(row['DeepL_Location'])
+    giardia_YL_pred.append(row['YLoc_Prediction'])
 Counter(giardia_DL_pred)
 Counter(giardia_YL_pred)
 
@@ -5117,7 +5152,7 @@ comm -12 <(sort PFam_List_ALL.txt) <(sort Prelim_PFam_List.txt) > Overlap_PFams.
 
 To better evaluate the key OGs I am examining, I performed conserved domain searches on the NCBI in batch form (https://www.ncbi.nlm.nih.gov/Structure/bwrpsb/bwrpsb.cgi), using the input files for the MAFFT aligments. An example of the options used can be seen below: 
 
-![Batch Conserved Domain Search Example](Biol_Interpret/Key_OGs/Batch_CDD_Example.png)
+![Batch Conserved Domain Search Example](README_FigsEtc/Batch_CDD_Example.png)
 
 
 For OGs examined in such detail, I decided to check how many of the sequences overlapped: 
