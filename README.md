@@ -23,6 +23,11 @@ conda install pandas
 
 ```
 
+If `conda` is not installed on your device, please see the Anaconda installation instructions here: https://docs.anaconda.com/anaconda/install/
+
+Versions 4.10.3 (Lund University Bioinformatics course server) and 4.13.0 (local Windows computer) were used for this project. 
+
+
 ### Functional Annotation & Targeting Prediction
 
 #### EggNOG
@@ -31,7 +36,7 @@ The EggNOG database is used for orthology prediction and functional annotation. 
 
 Download information for emapper, which is the associated tool used for annotation of a collection of proteins, is available here: http://eggnog5.embl.de/#/app/downloads
 
-Installed on the server at: /usr/local/bin/emapper.py
+Installed on the Lund University Bioinformatics course server at: /usr/local/bin/emapper.py
 
 ```bash
 #while EggNOG is installed on the bioinformatics server, some dependencies are missing
@@ -41,6 +46,8 @@ conda install psutil
 conda install -c conda-forge biopython
 
 ```
+
+Version 2.0.2 of emapper and version 5.0.1 of the local EggNOG database was used for this project. 
 
 #### InterProScan
 
@@ -84,6 +91,8 @@ InterProScan requires the following in order to run correctly:
 
 Information on running the program can be found here: https://interproscan-docs.readthedocs.io/en/latest/HowToRun.html
 
+Version 5.54-87.0 of InterProScan was used for this project. 
+
 #### DeepLoc
 
 Not on the server, so needs to be installed:
@@ -95,11 +104,10 @@ A license is necessary in order to install the program, but it is free for acade
 Tool can be used online at: http://www.cbs.dtu.dk/services/DeepLoc/
 
 ```bash
-#place files in the bin/ directory with trich_parab environment activated
 #unpack tar file
 tar -xvf deeploc-1.0.All.tar.gz
 #installing dependencies
-#it turns out some of these dependencies are quite old
+#some of these dependencies are quite old
 #so need an environment with an older version of python
 conda create -n DeepLoc_usage python=3.5.1
 conda activate DeepLoc_usage
@@ -127,6 +135,8 @@ source ~/.bashrc
 
 ```
 
+Version 1.0 of the DeepLoc program was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 #### MitoFates
 
 MitoFates is a protein targeting prediction software designed to predict mitochondrial targeting sequences and their cleavage sites. 
@@ -143,9 +153,9 @@ tar -xvf MitoFates_1.2.tar.gz
 conda create -n MitoFates-env
 conda activate MitoFates-env
 #installing dependencies, as per the README
-conda install -c conda-forge libsvm==3.0
-#so that didn't work because conda doesn't go that far back
-#lowest conda can do is
+#The program README recommends libsvm==3.0
+#however, conda doesn't go that far back
+#the oldest conda can do is
 conda install -c conda-forge libsvm==3.16
 #install necessary perl libraries
 #have to do some installation of perl stuff first
@@ -164,6 +174,8 @@ source ~/.bashrc
 
 ```
 
+Version 1.2 of MitoFates was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 Please note that as of the writing of this section on 16.09.2022, the MitoFates website was not accessible. It is unclear whether this is a temporary error. 
 
 #### SignalP
@@ -174,7 +186,9 @@ The executable file download link is available for academic use from here: https
 
 A license is necessary in order to install the program, but it is free for academic use.
 
-Installed on the server at: /usr/local/bin/signalp
+Installed on the Lund University Bioinformatics course server at: /usr/local/bin/signalp
+
+Version 5.0b of SignalP was used for this project. 
 
 #### TargetP
 
@@ -184,7 +198,9 @@ The executable file download link is available for academic use from here: https
 
 A license is necessary in order to install the program, but it is free for academic use.
 
-Installed on the server at: /usr/local/bin/targetp
+Installed on the Lund University Bioinformatics course server at: /usr/local/bin/targetp
+
+Version 2.0 of TargetP was used for this project. 
 
 #### YLoc
 
@@ -218,6 +234,8 @@ docker run --mount type=bind,source=/home/inf-47-2020/ThesisTrich/DataFiles/InPr
 
 ```
 
+Version 1.0 of YLoc was used for this project, and was installed on Ubuntu on a local Windows machine. 
+
 One benefit of using the desktop version of Docker, rather than the command-line version, is that with Docker Desktop, it is possible to restart containers that have been shut down, making them accessible again. This way, new containers do not have to be made each time, and created files can be accessed later, should some issue occur.
 
 
@@ -243,11 +261,10 @@ git clone https://github.com/rderelle/Broccoli
 #and source it
 source ~/.bashrc
 #going to create an environment for it, as per the instructions
-#(whew, I'm going to have A Time keeping all of these conda environments straight)
 conda create -n env-broccoli python=3.6 ete3
 conda activate env-broccoli
 #next install Diamond
-#in the manual Diamond & FatTree are installed before the environment is made
+#in the manual Diamond & FastTree are installed before the environment is made
 #but as I'm installing them via conda...
 conda install -c bioconda diamond
 #next install FastTree
@@ -255,16 +272,20 @@ conda install -c bioconda fasttree
 
 ```
 
+Version 1.1 of Broccoli was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 #### OrthoFinder
 
 OrthoFinder is an orthologous clustering software that uses score-based heuristic methods. The program can be installed from the source on GitHub (https://github.com/davidemms/OrthoFinder), or via `conda`:
 
 ```bash
-#in the trich_parab conda environment
+#in the thesis_trich conda environment
 conda install orthofinder
 conda update orthofinder
 
 ```
+
+Version 2.5.4 of OrthoFinder was used in this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 #### ProteinOrtho
 
@@ -281,6 +302,8 @@ conda activate env-protOrtho
 conda install proteinortho
 
 ```
+
+Version 6.0.33 of ProteinOrtho was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 #### SonicParanoid
 
@@ -305,6 +328,8 @@ cd sonicparanoid_test
 sonicparanoid -i ./test_input -o ./test_output -p my_first_run -t 4
 
 ```
+
+Version 1.3.8 of SonicParanoid was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 
 ### Ancestral State Reconstruction
@@ -332,6 +357,8 @@ java -jar Count.jar
 
 ```
 
+The version number of the Count program is unclear, but is likely 1.0.
+
 #### MAFFT
 
 MAFFT is a multiple sequence alignment program. The website can be found here: https://mafft.cbrc.jp/alignment/software/
@@ -350,6 +377,8 @@ conda update mafft
 
 ```
 
+Version 7.505 of MAFFT was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 #### trimAl
 
 TrimAl is an alignment trimming tool that automatically detects and removes "spurious sequences or poorly aligned regions" of MSAs. The program website can be found here: http://trimal.cgenomics.org/
@@ -361,12 +390,14 @@ Instructions on command line usage can be found here: http://trimal.cgenomics.or
 Supplementary material can be found here: http://trimal.cgenomics.org/_media/manual.b.pdf
 
 ```bash
-#installation - trying first with conda
+#installation via conda
 conda create -n env-trimAl
 conda activate env-trimAl
 conda install trimal
 
 ```
+
+Version 1.4.1 of TrimAl was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 #### IQ-TREE
 
@@ -381,6 +412,8 @@ conda activate env-IQ-TREE
 conda install -c bioconda iqtree
 
 ```
+
+Version 2.2.0.3 of IQ-TREE was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 #### ALE 
 
@@ -398,6 +431,7 @@ chmod +x ale.sif
 
 ```
 
+Version 0.4 of ALE was used for this project. This program was used on the Uppmax HPC. 
 
 ### Other
 
@@ -415,6 +449,8 @@ conda activate env-BUSCO
 
 ```
 
+Version 5.3.0 of BUSCO was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 #### Seqkit
 
 Seqkit is a program that allows the manipulation and filtration of FASTA and FASTQ files. Information on the program can be found here: https://bioinf.shenwei.me/seqkit/
@@ -424,6 +460,8 @@ Seqkit is a program that allows the manipulation and filtration of FASTA and FAS
 conda install seqkit
 
 ```
+
+Version 2.1.0 of Seqkit was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
 
 #### Transdecoder
 
@@ -438,6 +476,8 @@ conda install -c bioconda transdecoder
 
 ```
 
+Version 5.5.0 of Transdecoder was used for this project, and the program was installed on the Lund University Bioinformatics course server. 
+
 #### Docker
 
 Docker is a program for the building and running of containers. Running Docker requires root priveleges, so it is generally not used on servers and HPCs. Docker has a desktop version, as well as command-line use. The Docker hub is a resource for publicly available Docker images. 
@@ -445,6 +485,8 @@ Docker is a program for the building and running of containers. Running Docker r
 The website can be found here: https://www.docker.com/
 
 An executable file to install the desktop app can be found here: https://www.docker.com/products/docker-desktop/
+
+This program was installed on a local Windows computer and utilized via Ubuntu. 
 
 #### Singularity
 
@@ -495,6 +537,8 @@ export VERSION=3.0.3 && # adjust this as necessary \
 ./mconfig --prefix=/opt/singularity
 
 ```
+
+This program was installed on a local Windows computer in order to generate a .sif file, and then utilized on the Uppmax HPC to run ALE. 
 
 #### Python & Spyder
 
@@ -553,13 +597,19 @@ source ~/.bashrc
 
 ```
 
+Version 1.4.4 of FigTree was used for this project, and was used on a local Windows computer. 
+
 #### Inkscape
 
 Inkscape is a vector graphics editor that was used in order to edit SVG output files into the finalized figures that were used in the report. The GUI can be downloaded from here: https://inkscape.org/release/inkscape-1.1/
 
+This program was used on a local Windows computer. 
+
 #### draw.io/diagrams.net
 
 The draw.io software is a freely available software usable for creating simple diagrams. Both an online-only and desktop version of the tool are available from the website, here: https://drawio-app.com/
+
+This program was used on a local Windows computer. 
 
 
 ## Version Summary
@@ -592,6 +642,7 @@ HPCs:
 
 Local computer: 
   - conda 4.13.0
+  - Count: version number unclear, likely 1.0
   - Python 3.8.12
   - Spyder 5.1.5 & 5.2.2
   - R 4.2.1
@@ -870,7 +921,6 @@ ls MainData/*.fasta | while read file; do
 done
 #note that the script used above is the initial FASTA heading encoder script
 ###
-#working within the ThesisTrich/DataFiles/ directory
 #model:
 python assignFASTAheaders_v2.py input_fasta ref_file
 #adapting it
@@ -926,7 +976,7 @@ Functional annotation tools algorithmically analyze and predict the function and
 EggNOG was run on the Lund University Bioinformatics course server. 
 
 ```bash
-#activate the conda environment wehere dependencies are installed
+#activate the conda environment where dependencies are installed
 conda activate eggNOG-NEW-env
 #directory for temporary files
 mkdir OG_comp_tmp
@@ -1109,11 +1159,8 @@ deeploc --fasta ../../EncodedData/BM_newprots_may21.anaeromoeba_edit.fasta --out
 # -o OUTPUT, --output OUTPUT
 # Output prefix.
 # -a, --attention       Generate file with attention values for each protein.
-#when it finishes, get this printout to stdout:
+#while the prgram runs, the following error message will be printed: 
 #WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
-#Input file processed. Starting prediction...
-#Prediction finished. Generating output...
-#Done!
 #the warning is irrelevant - it does not complicate running the program
 deeploc --fasta ../../EncodedData/BS_newprots_may21.anaeromoeba_edit.fasta --output BS_anaeromoeba_DL --attention
 deeploc --fasta ../DataFiles/EncodedData/Carpediemonas_membranifera.PRJNA719540_edit.fasta --output Carpediemonas_membranifera_DL --attention
@@ -1424,7 +1471,7 @@ BUSCO was run on the Lund University Bioinformatics course server.
 #activate the conda environment where the program was installed
 conda activate env-BUSCO
 #usage:
-proteinortho -h
+busco -h
 #see available datasets with: 
 busco --list-datasets
 #explanation of commands: 
@@ -1861,16 +1908,6 @@ The parsed files were compiled into a species-specific database in each species 
 ```bash
 #unfortunately, these need to be written manually, since all of the directories have slightly different file name structures
 #model:
-python combo_OG_results__v2.py PFam_EN_Parsed EggNOG_Parsed DeepLoc_Parsed SignalP_Parsed TargetP_Parsed IPRScan_Parsed MitoFates_Parsed YLoc_Parsed Output_DB
-#applying it:
-python ../../../Scripts/combo_OG_results__v2.py BM_newprots_may21.anaeromoeba_edit.emap.emapper_PFam.txt BM_newprots_may21.anaeromoeba_edit.emap.emapper_eggNOG.txt BM_anaeromoeba_DL_DeepLocP.txt BM_newprots_may21.anaeromoeba_edit_summary_SignalP.txt BM_newprots_may21.anaeromoeba_edit_summary_TargetP.txt BM_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt BM_newprots_may21.anaeromoeba_edit_StandardAA_nonM_MFresults_MFparsed.txt BM_newprots_may21.anaeromoeba_edit_YL_YLparsed.txt BM_newprots_may21.anaeromoeba_predDB.txt
-#after some necessary debugging, this is working!!!
-#time to use it on the other species
-#actually, first: new version that adds in the species IDs in the column after the queries
-#going to use the the species IDs used in the categorize_prot_species.py script
-python ../../../Scripts/combo_OG_results__v3.py BM_newprots_may21.anaeromoeba_edit.emap.emapper_PFam.txt BM_newprots_may21.anaeromoeba_edit.emap.emapper_eggNOG.txt BM_anaeromoeba_DL_DeepLocP.txt BM_newprots_may21.anaeromoeba_edit_summary_SignalP.txt BM_newprots_may21.anaeromoeba_edit_summary_TargetP.txt BM_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt BM_newprots_may21.anaeromoeba_edit_StandardAA_nonM_MFresults_MFparsed.txt BM_newprots_may21.anaeromoeba_edit_YL_YLparsed.txt BM_newprots_may21.anaeromoeba BM_newprots_may21.anaeromoeba_predDB.txt
-#yup, great, going with that
-#model:
 python combo_OG_results__v3.py PFam_EN_Parsed EggNOG_Parsed DeepLoc_Parsed SignalP_Parsed TargetP_Parsed IPRScan_Parsed MitoFates_Parsed YLoc_Parsed Species_ID Output_DB
 #applying it:
 python ../../../Scripts/combo_OG_results__v3.py BS_newprots_may21.anaeromoeba_edit.emap.emapper_PFam.txt BS_newprots_may21.anaeromoeba_edit.emap.emapper_eggNOG.txt BS_anaeromoeba_DL_DeepLocP.txt BS_newprots_may21.anaeromoeba_edit_summary_SignalP.txt BS_newprots_may21.anaeromoeba_edit_summary_TargetP.txt BS_newprots_may21.anaeromoeba_edit_StandardAA_IPRScan_final.txt BS_newprots_may21.anaeromoeba_edit_StandardAA_nonM_MFresults_MFparsed.txt BS_newprots_may21.anaeromoeba_edit_YL_YLparsed.txt BS_newprots_may21.anaeromoeba BS_newprots_may21.anaeromoeba_predDB.txt
@@ -1951,6 +1988,8 @@ After running this program on the parsed results of all 4 software, it was disco
 ```bash
 #usage model for the script: 
 python check_OG_duplicates.py input_db
+#note that this program was later integrated as a module of the python og_stats__v2.py script
+#this is why usage examples are not given
 
 ```
 
@@ -2067,7 +2106,7 @@ cat *_species.txt > species_prots_ref.txt
 
 ```
 
-Next, a the `categorize_prot_species.py` script (made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub) was used to create a database which includes all protein query IDs, the "official" species/strain designation, a categorized species/strain/assemblage designation, and the phylum that the species belongs to.
+Next, the `categorize_prot_species.py` script (made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub) was used to create a database which includes all protein query IDs, the "official" species/strain designation, a categorized species/strain/assemblage designation, and the phylum that the species belongs to.
 
 ```bash
 #model for running the program:
@@ -2077,24 +2116,20 @@ python ../../Scripts/categorize_prot_species.py species_prots_ref.txt Prots_Spec
 
 ```
 
-A new verison of the script above, named `categorize_prot_species__v2.py`, was written later to accomadate the integration of the _A. lanta_ proteome into the project. It has been made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. 
-
-```bash
-
-```
+A new verison of the script above, named `categorize_prot_species__v2.py`, was written later to accomadate the integration of the _A. lanta_ proteome into the project. It has been made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. Its usage is shown later in teh workflow, during the integration of the _A. lanta_ proteome. 
 
 Paralogs were filtered out of the orthologous clustering results files using the `filter_paralogs__v2.py` script, which has been made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. 
 
 ```bash
 #model:
-python filter_paralogs.py [-h] [-br] [-of] [-po] [-sp] [-v] INPUT_FILE REFERENCE_FILE
+python filter_paralogs__v2.py [-h] [-br] [-of] [-po] [-sp] [-v] INPUT_FILE REFERENCE_FILE
 #the usage instructions can be obtained with: 
-python Scripts/filter_paralogs.py -h
+python Scripts/filter_paralogs__v2.py -h
 #applying it:
-python ../../Scripts/filter_paralogs.py -br Broccoli_OGs_parsed.txt Prots_Species_Phyla_DB.txt
-python ../../Scripts/filter_paralogs.py -of OF_OGs_parsed.txt Prots_Species_Phyla_DB.txt
-python ../../Scripts/filter_paralogs.py -po PO_OGs_parsed.txt Prots_Species_Phyla_DB.txt
-python ../../Scripts/filter_paralogs.py -sp SP_OGs_parsed.txt Prots_Species_Phyla_DB.txt
+python ../../Scripts/filter_paralogs__v2.py -br Broccoli_OGs_parsed.txt Prots_Species_Phyla_DB.txt
+python ../../Scripts/filter_paralogs__v2.py -of OF_OGs_parsed.txt Prots_Species_Phyla_DB.txt
+python ../../Scripts/filter_paralogs__v2.py -po PO_OGs_parsed.txt Prots_Species_Phyla_DB.txt
+python ../../Scripts/filter_paralogs__v2.py -sp SP_OGs_parsed.txt Prots_Species_Phyla_DB.txt
 
 ```
 
@@ -2189,7 +2224,7 @@ done
 
 #### Scoring OG membership similarity
 
-The `og_membership_test.py` program compares the parsed results files from Broccoli, OrthoFinder, ProteinOrtho and SonicParanoid, in order the score the similarity of the orthologous clusters created by these programs. The user can set a target threshold average similarity value, under which results should not be reported. This script is made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. 
+The `og_membership_test.py` program compares the parsed results files from Broccoli, OrthoFinder, ProteinOrtho and SonicParanoid, in order to score the similarity of the orthologous clusters created by these programs. The user can set a target threshold average similarity value, under which results should not be reported. This script is made available in the TrichoCompare/OG_Comparisons/ directory of the GitHub. 
 
 ```bash
 #model:
@@ -2199,6 +2234,9 @@ python ../../../Scripts/og_membership_test.py ../Broccoli_OGs_parsed_nonDuplicat
 #filtrations at different thresholds can be initiated using the JSON checkpoint files: 
 #model:
 python og_membership_test.py [JSON_file] [membership_percent]
+#note that usage of this method is now shown, as it was primarily used during debugging
+#however, this full program takes a very long time to run
+#users wishing to analyze their data from multiple thresholds may find it useful
 
 ```
 
@@ -2357,7 +2395,7 @@ awk -F'\t' '{ if (NR!=1) { print $37 } }' FILE | sort | uniq #for SonicParanoid 
 
 ```
 
-The `extract_OG_prots.py` program the species database generated by `prot_DB_plus_OGs.py` - or a filtered version of the same, with the same column structure - in order to extract only those rows that contain protein queries predicted to be part of a list of OGs that the user specifies via command-line input.
+The `extract_OG_prots.py` program parses the species database generated by `prot_DB_plus_OGs.py` - or a filtered version of the same, with the same column structure - in order to extract only those rows that contain protein queries predicted to be part of a list of OGs that the user specifies via command-line input.
 
 The script is made available in the TrichoCompare/PathwaysFilt/ directory of the GitHub. 
 
@@ -2372,7 +2410,7 @@ python ../Scripts/extract_OG_prots.py Metamonada_pred_OG_DB.txt OG_program input
 
 ## Subcellular Localization-Based Filtrations
 
-The results of the the functional annotation software will be used to filter the results down to OGs of proteins targeted to either the mitochondrion-related organelle or the secretome. 
+The results of the the functional annotation software were used to filter the results down to OGs of proteins targeted to either the mitochondrion-related organelle or the secretome. 
 
 The following programs were used to score the probability of a protein being targeted to either the MRO or secretome: 
  - Secretome: `score_secretoryPathway.py`: This program scores the predictions generated for the protein queries present in the species database generated by `prot_DB_plus_OGs.py` - or a filtered version of the same, with the same column structure - in order to guage the likelihood of a particular protein query belonging to the secretory pathway, on the basis of prediction data generated by the SignalP, TargetP, DeepLoc and YLoc programs. These scores are then used to generate a filtered version of the input dataframe.
@@ -2438,7 +2476,7 @@ For the sake of having more reliable data, I looked into the literature for _Tri
  - Secretome: Twu et al. 2013, Štáfková et al. 2018, de Miguel et al. 2010
  - Mitochondria/Hydrogenosome: Beltrán et al. 2013, Schneider et al. 2011, Rada et al. 2011
 
-The `query_prot_ids.py` program parses the protein ID encoding reference file in order to extract queried portions of the dataframe (ie. encoded and unencoded value pairs). This script was used to find the encoded protein IDs of the control proteins found in the literature. The `query_prot_ids__v2.py` program accomplishes the same, but accomadates the complex protein naming scheme of _T. vaginalis_, where individual proteins have multiple names, and the names commonly used in the literature are not the ones that appear as FASTA headers. 
+The `query_prot_ids.py` program parses the protein ID encoding reference file in order to extract queried portions of the dataframe (ie. encoded and unencoded value pairs). This script was used to find the encoded protein IDs of the control proteins found in the literature. The `query_prot_ids__v2.py` program accomplishes the same, but accommodates the complex protein naming scheme of _T. vaginalis_, where individual proteins have multiple names, and the names commonly used in the literature are not the ones that appear as FASTA headers. 
 
 The `extract_prot_db.py` program filters the species database generated by `prot_DB_plus_OGs.py` - or a filtered version of the same, with the same key columns - in order to extract only those rows that contain protein queries used as input. Alternately, searching for a match in a difference column can be specified. 
 
@@ -2488,6 +2526,7 @@ This script is made available in the TrichoCompare/PathwaysFilt/ directory of th
 python assess_OG_startAA_scores.py -h
 #model: 
 python assess_OG_startAA_scores.py [-h] -cat FILTRATION_CATEGORY -query QUERY_IDS -prog OG_PROGRAM [-val THRESHOLD] [-score SCORE] [-incl INCLUDED_AA] [-out OUT_NAME] [-v] -i INPUT_FILE
+#the application of this script is demonstrated later in the workflow
 
 ```
 
@@ -2985,7 +3024,7 @@ python ../../Scripts/filter_OG_profile.py ../SonicParanoid_OG__Prot_Spp.txt Alan
 
 ```
 
-The `create_counts_table.py` program creates a pivot table of counts of proteins present in an OG per per species, as well as the PFam annotations associated with those OGs, on the basis of a file in the format [OG_ID]\tQuery\tSpecies_Id (created by either the og_prot_spp_list.py or filter_OG_profile.py scripts) and a file in the format [OG_ID]\t[PFam_Data] (created by the `og2PFam_pivot__v2.py` script). This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
+The `create_counts_table.py` program creates a pivot table of counts of proteins present in an OG per species, as well as the PFam annotations associated with those OGs, on the basis of a file in the format [OG_ID]\tQuery\tSpecies_Id (created by either the og_prot_spp_list.py or filter_OG_profile.py scripts) and a file in the format [OG_ID]\t[PFam_Data] (created by the `og2PFam_pivot__v2.py` script). This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
 
 ```bash
 #model: 
@@ -3049,7 +3088,6 @@ Process of running Count analysis:
     - In this tab, it's possible to examine where each of these OGs was gained, lost and duplicated in the lineage.
     - Highlighting all OGs (CTRL+A) generates a summary of OG losses and gains in the entire tree.
     - The results of the Dollo parsimony can bes saved in a tab-separated .txt file (for ex.: Alanta_mito_3_SP_ALL__CountPivot__Dollo.txt)
-  - ///saving and reopening below///
   - To save the session: "Session" tab at the top → "Save everything ..." → Assign the file a name
     - Note that the save file does not automatically provide a file extension, but this isn't an issue.
     - The file saved is in .xml format, and whether or not the user manually adds the .xml extension, Count will be able to open the session file.
@@ -3097,7 +3135,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 32
    - Loss: 53
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_OF__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_OF_ALL__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Mitochondria 3 SP
@@ -3133,7 +3171,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 33
    - Loss: 65
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_SP__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_mito_3_SP_ALL__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Secretome 3 OF
@@ -3169,7 +3207,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 39
    - Loss: 133
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_OF__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_OF_ALL__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Secretome 3 SP
@@ -3205,7 +3243,7 @@ Summary statistics (Dollo Parsimony):
    - Gain: 35
    - Loss: 134
 
-![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_SP__CountPivot__Dollo_nonFornicates.png)
+![Dollo Parsimony tree of OG gain/loss (non-Fornicata)](README_FigsEtc/Alanta_sec_3_SP_ALL__CountPivot__Dollo_nonFornicates.png)
 
 
 ### Dollo Parsimony Filtration
@@ -3276,6 +3314,7 @@ python subfilter_Dollo_CHOICE.py input_db ref_db query_node pre_query_node query
 #present in common ancestor but lost in Fornicata
 #Mito OF
 python ../subfilter_Dollo_CHOICE.py Alanta_mito_3_OF_ALL__CountPivot__Dollo.txt Alanta_mito_3_OF_ALL__CountPivot.txt 28 31 0 1 MetaLCAnonFornicates
+#the above is an example usage of the script
 
 ```
 
@@ -3599,12 +3638,11 @@ nohup ./sec_OF3_Round7.sh &> nohup7.out &
 #the following run raised an error: 
 #the debugging process is shown below
 mafft --localpair --maxiterate 1000 --amino --quiet /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/V2_OF_Sec3__OG0003668_MSAprep.fasta > V2_OF_Sec3__OG0003668_MSA.fasta
-#this file really does not want to make an alignment
-#tried it on the MAFFT web service and got a clue
+#I tried running it on the MAFFT web service and the error message gave me a clue
 grep -v ">" *.fasta | grep "U"
 # OF_Sec3__OG0003668_MSAprep.fasta:MEIKVVMCQSUGSMPRFKGLQAFLKGKLGVEAAFEYGALGDFEVFANGTLVFSKAKEGAYPSPPAVLAAIEALGA
 # OF_Sec3__OG0003668_MSAprep.fasta:MEIKVVMCQSUGSMPRFKGLQAFLKGKLGVEAAFEYGALGDFEVFANGTLVFSKAKEGAYPSPPAVLAAIEALGA
-#removed U amino acids with nano
+#removed U amino acids with nano and was able to then run the following: 
 mafft --localpair --maxiterate 1000 --amino --quiet /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/OF_Sec3__OG0003668_noU_MSAprep.fasta > OF_Sec3__OG0003668_noU_MSA.fasta
 #in Sec_SP/
 ls /home/inf-47-2020/ThesisTrich/MAFFT_MSA/Input_FASTA/Sec_SP/*.fasta | while read file; do
@@ -3988,8 +4026,10 @@ ALE is the gene tree species tree aware ancestral state reconstruction program.
 ```bash
 #on my local computer: 
 singularity pull ale.sif docker://boussau/alesuite:latest
-#well, it made a file, at least! now we have to see whether it works on Rackham, I guess
-#transferred over with FileZilla
+#this created the ale.sif file that I transferred to Uppmax with FileZilla
+#this was necessary because building such images generally requires sudo permissions
+#which a user cannot have on an HPC
+###
 #using the Singularity image created locally & transferred to the HPC
 #need to make it executable
 chmod +x ale.sif
@@ -4245,7 +4285,7 @@ python parse_ALE_Nodes__v2.py SP_Sec3__Events_Final.txt ALE_2R_Indexing.txt
 
 ```
 
-The `parse_ALE_VisualizeAnnot.R` program annotates the nodes/branches of an input phylogenetic species tree with data derived from a summary data table showing information relevant to the nodes. The resulting tree is output to an SVG file. This program is a based off of the ALE parsing programs used in the ALE-pipeline program written by Max Emil Schön (@maxemil on GitHub: https://github.com/maxemil), which can be found here: https://github.com/maxemil/ALE-pipelineThis. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. 
+The `parse_ALE_VisualizeAnnot.R` program annotates the nodes/branches of an input phylogenetic species tree with data derived from a summary data table showing information relevant to the nodes. The resulting tree is output to an SVG file. This program is a based off of the ALE parsing programs used in the ALE-pipeline program written by Max Emil Schön (@maxemil on GitHub: https://github.com/maxemil), which can be found here: https://github.com/maxemil/ALE-pipelineThis. This script is made available in the TrichoCompare/AncestralStates/ directory of the GitHub. Note that the R scripts used in this workflow are intended to be run within RStudio or similar - they cannot be run from the command line. 
 
 Using the above script, the trees below were created, yielding the summary statistics found below: 
 
