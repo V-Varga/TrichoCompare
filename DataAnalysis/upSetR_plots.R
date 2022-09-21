@@ -56,6 +56,7 @@ setwd('C:/Users/V/Documents/LundUni/Trich_Parab/Thesis_Work/Figures')
 
 #load libraries
 library(UpSetR)
+library(tools)
 
 
 #load input files & determine output file names
@@ -67,14 +68,15 @@ library(UpSetR)
 #determine input file - binary count data
 #the tree file
 #input_data <- args[1]
-#input_data <- "Alanta_mito_3_OF_ALL__CountPivot__Binary.txt"
+input_data <- "Alanta_mito_3_OF_ALL__CountPivot__Binary.txt"
 #input_data <- "Alanta_mito_3_SP_ALL__CountPivot__Binary.txt"
 #input_data <- "Alanta_sec_3_OF_ALL__CountPivot__Binary.txt"
-input_data <- "Alanta_sec_3_SP_ALL__CountPivot__Binary.txt"
+#input_data <- "Alanta_sec_3_SP_ALL__CountPivot__Binary.txt"
 
 #determining the output file names from the input file names
 #usr_file_ext <- args[2]
-usr_file_ext <- "UpSetR"
+#usr_file_ext <- "UpSetR"
+usr_file_ext <- "UpSetR_fin"
 #strip the file extension
 #ref: https://stackoverflow.com/questions/29113973/get-filename-without-extension-in-r
 input_base <- file_path_sans_ext(basename(input_data))
@@ -114,5 +116,6 @@ upset(binary_df,
 
 #Dimensions for a .PNG should be: 
 #Width 3000; Height 1500
+#Width 6000; Height 3000
 #Dimensions for a .PDF should be: 
 #20 x 15 in Potrait mode
