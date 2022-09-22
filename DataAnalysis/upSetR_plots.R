@@ -57,6 +57,7 @@ setwd('C:/Users/V/Documents/LundUni/Trich_Parab/Thesis_Work/Figures')
 #load libraries
 library(UpSetR)
 library(tools)
+library(grid)
 
 
 #load input files & determine output file names
@@ -68,10 +69,16 @@ library(tools)
 #determine input file - binary count data
 #the tree file
 #input_data <- args[1]
-input_data <- "Alanta_mito_3_OF_ALL__CountPivot__Binary.txt"
+#input_data <- "Alanta_mito_3_OF_ALL__CountPivot__Binary.txt"
 #input_data <- "Alanta_mito_3_SP_ALL__CountPivot__Binary.txt"
 #input_data <- "Alanta_sec_3_OF_ALL__CountPivot__Binary.txt"
-#input_data <- "Alanta_sec_3_SP_ALL__CountPivot__Binary.txt"
+input_data <- "Alanta_sec_3_SP_ALL__CountPivot__Binary.txt"
+
+#Figure title variable
+#upset_fig_title <- "OrthoFinder OGs Targeted to the MRO"
+#upset_fig_title <- "SonicParanoid OGs Targeted to the MRO"
+#upset_fig_title <- "OrthoFinder OGs Targeted to the Secretome"
+upset_fig_title <- "SonicParanoid OGs Targeted to the Secretome"
 
 #determining the output file names from the input file names
 #usr_file_ext <- args[2]
@@ -82,6 +89,7 @@ usr_file_ext <- "UpSetR_fin"
 input_base <- file_path_sans_ext(basename(input_data))
 out_base <- paste(input_base, usr_file_ext, sep = "_")
 out_base
+#copy the printout above to use as the file name when exporting
 
 
 #Part 2: Load input data into dataframe
@@ -95,7 +103,6 @@ binary_df <- read.table(input_data, header=TRUE)
 #other upset plot ref: https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html
 #upset(binary_df)
 #the simple version above shows only a small subsection
-#upset plot with all species shown below: 
 upset(binary_df,
       sets = c("Anaeramoeba_lanta_160522", "BM_newprots_may21.anaeromoeba", "SC_newprots_may21.anaeromoeba", 
                "BS_newprots_may21.anaeromoeba", "Tetratrichomonas_gallinarum.5730.aa", "Pentatrichomonas_hominis.5728.aa", 
@@ -109,13 +116,24 @@ upset(binary_df,
                "GiardiaDB_GintestinalisADH", "EP00701_Giardia_intestinalis", "Giardia_intestinalis.PRJNA1439", 
                "GiardiaDB_GintestinalisBGS", "GiardiaDB_GintestinalisBGS_B" ),
       order.by = "freq")
-#saved to: Count2_upsetR_Ver1.pdf
+#adding a title to the plot
+#ref: https://github.com/hms-dbmi/UpSetR/issues/76
+grid.text(upset_fig_title, x = 0.7, y=0.95, gp=gpar(fontsize=60))
+#note that this font size does not look good in the RStudio Plots preview
+#however it works well with the width 3000 export maintaining the aspect ratio
+#this gives the final dimensions at 3000x1854
 
 
 #Part 4: Save data to file
 
+#Originally, planned to save the image as png (dimensions given below)
+#however, export as an SVG image maintains the quality much better
+#so export from the plot window in SVG format
+#with width 3000 and aspect ration maintained
+#this gives final image dimensions of 3000x1854
+
+
 #Dimensions for a .PNG should be: 
 #Width 3000; Height 1500
-#Width 6000; Height 3000
 #Dimensions for a .PDF should be: 
 #20 x 15 in Potrait mode
