@@ -2,7 +2,7 @@
 
 Author: Vi Varga
 
-Posted: 16.09.2022
+Posted: 25.09.2022
 
 GitHub: https://github.com/V-Varga/TrichoCompare
 
@@ -743,6 +743,8 @@ cp Trinity_BarthelonaPAP020_Hiseq.fasta.transdecoder.pep EP00792_Barthelona_sp_P
 ### File Restructuring
 
 The amino acid FASTA files needed to be set up in the same format, in order to streamline the analysis. Therefore, each FASTA file was converted to single-line FASTA format using `awk`, as shown below: 
+
+Please note that throughout this README, references will occasionally be made to a "preliminary project." That smaller, exploratory project was undertaken June-November 2021. The README prepared for that project is made available in the TrichoCompare/ReferenceFiles/ directory of the TrichoCompare project's GitHub repository. 
 
 ```bash
 #The following are copied from the preliminary project's file preparation
