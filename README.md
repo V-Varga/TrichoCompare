@@ -5289,4 +5289,6 @@ python ../Scripts/og2IPRS_pivot.py Metamonada_Alanta_pred_OG_DB.txt SonicParanoi
 
 ## Citations
 
-f
+The ALE pipeline followed in this project was based off of the methods described in Martijn et al. 2020: 
+
+> Martijn J, Schön ME, Lind AE, Vosseberg J, Williams TA, Spang A, et al. Hikarchaeia demonstrate an intermediate stage in the methanogen-to-halophile transition. Nat Commun. 2020;11: 1–14. doi:10.1038/s41467-020-19200-2
