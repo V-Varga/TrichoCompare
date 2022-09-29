@@ -83,7 +83,8 @@ upset_fig_title <- "SonicParanoid OGs Targeted to the Secretome"
 #determining the output file names from the input file names
 #usr_file_ext <- args[2]
 #usr_file_ext <- "UpSetR"
-usr_file_ext <- "UpSetR_fin"
+#usr_file_ext <- "UpSetR_fin"
+usr_file_ext <- "UpSetR_Select"
 #strip the file extension
 #ref: https://stackoverflow.com/questions/29113973/get-filename-without-extension-in-r
 input_base <- file_path_sans_ext(basename(input_data))
@@ -124,6 +125,32 @@ grid.text(upset_fig_title, x = 0.7, y=0.95, gp=gpar(fontsize=60))
 #this gives the final dimensions at 3000x1854
 
 
+#Below, an alternative version of the plot for the report: 
+#for the sake of visibility, need to cut off low-count intersections
+#ref: https://cran.r-project.org/web/packages/UpSetR/UpSetR.pdf
+#decided to use a intersection size cutoff of 52 OGs (no. 11), as after this the values drop fairly rapidly
+upset(binary_df, nintersects = 11, 
+      text.scale = c(2, 2, 2, 1.3, 1.2, 2), 
+      sets = c("Anaeramoeba_lanta_160522", "BM_newprots_may21.anaeromoeba", "SC_newprots_may21.anaeromoeba", 
+               "BS_newprots_may21.anaeromoeba", "Tetratrichomonas_gallinarum.5730.aa", "Pentatrichomonas_hominis.5728.aa", 
+               "Trichomonas_vaginalis_GenBank.PRJNA16084", "Trichomonas_vaginalis_RefSeq.G3", "Dientamoeba_fragilis.43352.aa", 
+               "Histomonas_meleagridis.PRJNA594289", "Histomonas_meleagridis.135588.aa", "Tritrichomonas_foetus.PRJNA345179", 
+               "EP00708_Paratrimastix_pyriformis", "EP00771_Trimastix_marina", "EP00770_Monocercomonoides_exilis", 
+               "EP00792_Barthelona_sp_PAP020", "EP00769_Ergobibamus_cyprinoides", "Carpediemonas_membranifera.PRJNA719540", 
+               "EP00764_Aduncisulcus_paluster", "EP00766_Chilomastix_caulleryi", "EP00767_Chilomastix_cuspidata", 
+               "Kipferlia_bialata.PRJDB5223",  "EP00768_Dysnectes_brevis", "Spironucleus_salmonicida.PRJNA60811", 
+               "EP00703_Trepomonas_sp_PC1", "Giardia_muris.PRJNA524057", "GiardiaDB_GintestinalisEP15", 
+               "GiardiaDB_GintestinalisADH", "EP00701_Giardia_intestinalis", "Giardia_intestinalis.PRJNA1439", 
+               "GiardiaDB_GintestinalisBGS", "GiardiaDB_GintestinalisBGS_B" ),
+      order.by = "freq")
+#adding a title to the plot
+#ref: https://github.com/hms-dbmi/UpSetR/issues/76
+grid.text(upset_fig_title, x = 0.7, y=0.95, gp=gpar(fontsize=40))
+#note that this font size does not look good in the RStudio Plots preview
+#however it works well with the width 3000 export maintaining the aspect ratio
+#this gives the final dimensions at 3000x1854
+
+
 #Part 4: Save data to file
 
 #Originally, planned to save the image as png (dimensions given below)
@@ -131,6 +158,9 @@ grid.text(upset_fig_title, x = 0.7, y=0.95, gp=gpar(fontsize=60))
 #so export from the plot window in SVG format
 #with width 3000 and aspect ration maintained
 #this gives final image dimensions of 3000x1854
+
+#for the subsetted plot for the thesis report, do the same as above
+#but set the width at 2000 (automatically sets height at 1236)
 
 
 #Dimensions for a .PNG should be: 
